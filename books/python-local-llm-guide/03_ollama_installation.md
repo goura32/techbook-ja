@@ -174,3 +174,53 @@ ollama run llama3.2 --temperature 0.7
 - Pythonからの呼び出し方法
 
 次章では、モデルの選択とダウンロードを深掘りします。
+
+### GPUのメモリとモデルサイズの関係
+
+GPUのVRAMサイズは、選択するモデルの最大パラメータ数を決定します。
+
+| GPU | VRAM | 選択可能なモデル目安 |
+|------|----|----|
+| GTX 1080 Ti | 11GB | llama3.1:8b (Q3_K_M) |
+| RTX 3060 | 12GB | llama3.1:8b (Q4_0) |
+| RTX 4060 | 8GB | qwen2.5:7b (Q4_K_M) |
+| RTX 4090 | 24GB | llama3.1:70b (Q4_0) |
+| A100 | 80GB | llama3.1:405b (Q2_K) |
+
+### モデルの管理コマンド
+
+```bash
+# ダウンロード済みモデルの一覧表示
+ollama list
+
+# 特定のモデルの詳細表示
+ollama show llama3.1:8b
+
+# モデルの情報を表示
+ollama list --json
+```
+
+### カスタムモデルの作成
+
+ollamaでは、カスタムモデルのModelfileからモデルを作成できます。
+
+**Modelfileの作成：**
+
+```docker
+FROM llama3.1:8b
+
+SYSTEM "あなたは日本語のITサポートアシスタントです。"
+
+PARAMETER temperature 0.2
+PARAMETER num_ctx 4096
+```
+
+**モデルのビルドとpush：**
+
+```bash
+# ローカルモデルとしてビルド
+ollama create my-support-assistant -f Modelfile
+
+# Ollama Library(Portal)にpush
+ollama push username/my-support-assistant
+```

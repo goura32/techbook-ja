@@ -110,3 +110,112 @@ ls target/release/rust-sys-app
 - VS Code + Rust Analyzerのセットアップ
 
 次章では、Rustの基本的な構文を学んでいきます。
+
+
+### Rustupの設定ファイルの確認
+
+Rustupとコンポーネントの設定ファイルを確認します。
+
+```bash
+# インストール先を確認
+rustup show
+
+# インストールするツールチェーンを確認
+rustup default stable
+
+# コンポーネントの確認
+rustup component list --installed
+```
+
+### Cargo.tomlの詳細設定
+
+Cargo.tomlの詳細な設定項目：
+
+```toml
+[package]
+name = "my-project"
+version = "0.1.0"
+edition = "2021"
+description = "Rustによるシステムプログラミング"
+
+# ライセンス
+license = "MIT OR Apache-2.0"
+authors = ["Your Name <you@example.com>"]
+homepage = "https://example.com"
+repository = "https://github.com/user/repo"
+
+# Documentation
+documentation = "https://docs.rs/my-project"
+readme = "README.md"
+keywords = ["system", "networking", "tool"]
+categories = ["command-line-utilities"]
+
+# 実行ファイルの設定
+[[bin]]
+name = "my-app"
+path = "src/main.rs"
+
+# ライブラリ設定
+[lib]
+name = "my_lib"
+path = "src/lib.rs"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+
+[build-dependencies]
+cc = "1.0"
+```
+
+### Rustのバージョン管理
+
+Rustupで異なるバージョンのツールチェーンを使用できます。
+
+```bash
+# 安定版（stable）を使用
+rustup default stable
+
+# Nightly版の使用
+rustup default nightly
+
+# MSRV（Minimum Supported Rust Version）を指定
+rustup install 1.70.0
+rustup override set 1.70.0
+```
+
+### クロスコンパイル
+
+Rustupとtargetを使えば、異なるOSやアーキテクチャにクロスコンパイルできます。
+
+```bash
+# 利用可能なターゲット一覧
+rustup target list
+
+# Windows(x86_64-pc-windows-gnu)にクロスコンパイル
+rustup target add x86_64-pc-windows-gnu
+cargo build --target x86_64-pc-windows-gnu
+
+# aarch64にクロスコンパイル
+rustup target add aarch64-unknown-linux-gnu
+cargo build --target aarch64-unknown-linux-gnu
+```
+
+### Rustのエラーメッセージの読み方
+
+Rustのエラーメッセージは非常に詳細です。以下のように理解しましょう。
+
+```
+error[E0382]: borrow of moved value: `s`
+ --> src/main.rs:2:9
+  |
+1 | let s = String::from("hello");
+  |     - move occurs because `s` has type `String`, which does not implement the `Copy` trait
+2 | let r = &s;
+  |         ^^  value borrowed here
+```
+
+- `error[E0382]`：エラー番号
+- `borrow of moved value`：説明（移動した値を借用した）
+- `--> src/main.rs:2:9`：エラー位置
+- 行番号付きのコードと`^`マーカーで、問題の箇所を示しています。
