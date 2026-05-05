@@ -29,7 +29,7 @@ print(response['response'])
 ```python
 {
     'model': 'llama3.2',
-    'created_at': '2025-01-01T12:00:00.000000Z',
+    'created_at': '2000-01-01T00:00:00.000000Z',
     'response': 'Pythonの利点は以下の通りです...',
     'done': True,
     'total_duration': 1234567890,
