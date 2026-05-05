@@ -13,10 +13,9 @@
 | [第4章](04_ownership_and_lifetimes.md) | 所有権とライフタイム | Borrow checkingの仕組み、メモリ安全性 |
 | [第5章](05_concurrency_and_async.md) | 並行性と非同期 | スレッド、メッセージパッシング、async/await |
 | [第6章](06_pattern_matching_and_generics.md) | 型システム | Enum、Trait、ジェネリクス |
-| [第7章](07_ffi_and_c_integration.md) | FFIとC連携 | 外部関数インターフェース、Cライブラリの利用 |
-| [第8章](08_performance_optimization.md) | パフォーマンス最適化 | ベンチマーク、最適化レベル、プロファイリング |
-| [第9章](09_error_handling.md) | エラーハンドリング | Result/Option、?演算子、カスタムエラー型 |
-| [第10章](10_practical_cli_server_project.md) | 実践プロジェクト | CLIツールとTCPサーバーの構築 |
+|| [第7章](07_ffi_and_performance.md) | FFI、C連携、パフォーマンス最適化 | 外部関数インターフェース、ベンチマーク、最適化 |
+|| [第8章](08_error_handling.md) | エラーハンドリング | Result/Option、?演算子、カスタムエラー型 |
+|| [第9章](09_practical_cli_server_project.md) | 実践プロジェクト | CLIツールとTCPサーバーの構築 |
 
 ## 🚀 始め方
 
@@ -47,12 +46,12 @@ cargo build --release
 - 型システムの仕組み
 - 非同期処理
 
-### フェーズ3: 実践的な技術 (第7章〜第10章)
-- C/Libの連携
+### フェーズ3: 実践的な技術 (第7章〜第9章)
+- FFIとCライブラリの連携
 - パフォーマンス最適化
 - CLIツールとサーバーの構築
 
-## 🛠 技術スタック
+
 
 | カテゴリー | 技術 |
 - 言語: Rust (Edition 2024)

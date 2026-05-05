@@ -14,7 +14,7 @@
 | [第5章](05_networking_and_ebpf.md) | ネットワークとeBPF | CNI、Cilium、Hubbleによる可視化 |
 | [第6章](06_gitops_and_argocd.md) | GitOpsとArgo CD | ArgoCDのApp of Appsパターン |
 | [第7章](07_ai_ml_workloads.md) | AI/MLワークロード | KServe、Kubeflow、GPUの扱い |
-| [第8章](08_finops_and_cost_management.md) | FinOpsとコスト管理 | OpenCost、リソース最適化 |
+|| [第8章](08_finops_and_cost_management.md) | FinOpsとコスト管理 | OpenCost、リソース最適化、予算管理 |\
 | [第9章](09_observability.md) | オブザーバビリティ | Prometheus、Grafana、OpenTelemetry |
 | [第10章](10_practical_kubernetes_platform.md) | 実践プロジェクト | K8sプラットフォーム設計の実装 |
 

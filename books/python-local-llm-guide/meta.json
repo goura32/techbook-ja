@@ -1,6 +1,35 @@
 {
-  "status": "completed",
-  "message": "All 11 chapters written, README added, and pushed to GitHub main branch.",
   "book_id": "python-local-llm-guide",
-  "title": "Pythonで学ぶローカルLLM構築入門"
+  "title": "Pythonで学ぶローカルLLM構築入門",
+  "status": "completed",
+  "message": "全章執筆完了。構成は書籍の内容に最適化済み（11章）。",
+  "overall_progress": 100,
+  "publish_date": "2026-05-05",
+  "steps": {
+    "keyword_collection": 100,
+    "research": 100,
+    "chapter_design": 100,
+    "writing": 100,
+    "review": 100,
+    "publish": 100
+  },
+  "chapters": {
+    "total": 11,
+    "completed": 11,
+    "pending": 0
+  },
+  "completed_chapters": [
+    "00_introduction",
+    "01_what_is_llm",
+    "02_environment_setup",
+    "03_ollama_installation",
+    "04_model_selection",
+    "05_calling_from_python",
+    "06_langchain_integration",
+    "07_building_rag",
+    "08_prompt_engineering",
+    "09_gpu_acceleration_and_optimization",
+    "10_practical_chatbot_project",
+    "11_deploying_chatbot"
+  ]
 }

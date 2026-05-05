@@ -17,8 +17,9 @@
 | [第6章](06_langchain_integration.md) | LangChainとの統合 | LCEL・チェーン・チャットHistory |
 | [第7章](07_building_rag.md) | RAGの構築 | ChromaDB・Retrieval Pipeline |
 | [第8章](08_prompt_engineering.md) | プロンプトエンジニアリング | Few-shot・CoT・ReAct |
-| [第9章](09_gpu_acceleration_and_optimization.md) | GPU加速と最適化 | GPU活用・量化・vLLM |
-| [第10章](10_practical_chatbot_project.md) | 実践プロジェクト | チャットボットの構築・デプロイ |
+|| [第9章](09_gpu_acceleration_and_optimization.md) | GPU加速と最適化 | GPU活用・量化・vLLM |
+|| [第10章](10_practical_chatbot_project.md) | 実践プロジェクト | チャットボットの構築（実装） |
+|| [第11章](11_deploying_chatbot.md) | デプロイ | Docker・クラウドへの公開 |
 
 ## 🚀 始め方
 
@@ -59,13 +60,14 @@ python <chapter_code_example>
 - PythonからのLLM操作
 - LangChainとの統合
 
-### フェーズ3: 実践 (第7章〜第10章)
+### フェーズ3: 実践 (第7章〜第11章)
 - RAGパイプラインの構築
 - プロンプトエンジニアリング
 - GPU加速と最適化
-- チャットボットの構築・デプロイ
+- チャットボットの構築
+- デプロイと公開
 
-## 🛠 技術スタック
+
 
 - **言語**: Python 3.10+
 - **LLMランタイム**: Ollama
