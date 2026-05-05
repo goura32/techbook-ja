@@ -1,0 +1,105 @@
+book_keywords:
+  # 既存書籍: python-local-llm-guide (完了)
+  - book_id: "python-local-llm-guide"
+    title: "Pythonで学ぶローカルLLM構築入門"
+    status: completed
+    keywords:
+      - name: "LLMローカル"
+        priority: high
+        status: processed
+      - name: "Ollama"
+        priority: high
+        status: processed
+      - name: "LangChain"
+        priority: high
+        status: processed
+      - name: "RAG"
+        priority: medium
+        status: processed
+      - name: "GPU最適化"
+        priority: low
+        status: processed
+      - name: "Quantization"
+        priority: low
+        status: processed
+    discovered:
+      - title: "RAGがLLMアプリの標準パターンに"
+        source: "SearXNG 2025"
+      - title: "LangGraphがエージェントに台頭"
+        source: "SearXNG 2025"
+      - title: "Structured Outputが標準に"
+        source: "SearXNG 2025"
+  
+  # 既存書籍: rust-system-programming (完了)
+  - book_id: "rust-system-programming"
+    title: "Rustシステムプログラミング入門"
+    status: completed
+    keywords:
+      - name: "Rustシステムプログラミング"
+        priority: high
+        status: processed
+      - name: "所有権とライフタイム"
+        priority: high
+        status: processed
+      - name: "並行性とasync/await"
+        priority: high
+        status: processed
+      - name: "FFIとC連携"
+        priority: medium
+        status: processed
+      - name: "メモリ安全性"
+        priority: high
+        status: processed
+      - name: "Linuxカーネル採用"
+        priority: medium
+        status: processed
+    discovered:
+      - title: "Rustが3年連続で最も憧れの言語"
+        source: "SearXNG 2025 State of Rust"
+      - title: "TIOBE指数13位、最も急成長"
+        source: "SearXNG 2025"
+      - title: "2025年に主要プロジェクト本格採用"
+        source: "SearXNG 2025"
+      - title: "Rust 1.0後、システムプログラミング言語として転換点"
+        source: "SearXNG 2025"
+
+  # 新書籍: kubernetes-linux
+  - book_id: "kubernetes-linux-system-design"
+    title: "Kubernetes × Linux システム設計 2025"
+    status: processing
+    keywords:
+      - name: "Kubernetes AI/ML ワークロード"
+        priority: high
+        status: processing
+      - name: "GitOps ArgoCD"
+        priority: high
+        status: pending
+      - name: "eBPF ネットワーキング"
+        priority: high
+        status: pending
+      - name: "FinOps コスト管理"
+        priority: medium
+        status: pending
+      - name: "オブザーバビリティ"
+        priority: medium
+        status: pending
+      - name: "Linux カーネル コンテナ"
+        priority: high
+        status: pending
+      - name: "プラットフォームエンジニアリング"
+        priority: high
+        status: pending
+      - name: "CNCF 最新動向"
+        priority: high
+        status: pending
+    discovered:
+      - title: "K8sでAI/MLワークロードが主要ユースケースに定着"
+        source: "SearXNG / KubeCon Europe 2025"
+      - title: "Argo CDがKubernetes GitOpsの大多数採用"
+        source: "SearXNG / CNCF"
+      - title: "eBPFがK8sネットワークの標準技術に"
+        source: "SearXNG / eBPF完全ガイド2025"
+      - title: "開発者体験向上がプラットフォーム設計の目標に"
+        source: "SearXNG / CNCFプロジェクト動向2025"
+      - title: "FinOpsがクラウドコスト管理の標準に"
+        source: "SearXNG / FinOps 2025"

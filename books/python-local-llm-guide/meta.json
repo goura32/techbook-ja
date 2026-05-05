@@ -1,15 +1,6 @@
 {
+  "status": "completed",
+  "message": "All 11 chapters written, README added, and pushed to GitHub main branch.",
   "book_id": "python-local-llm-guide",
-  "title": "Pythonで学ぶローカルLLM構築入門",
-  "status": "in_progress",
-  "current_step": 3,
-  "total_steps": 6,
-  "step_names": ["keyword_collection", "research", "chapter_design", "writing", "review", "publish"],
-  "chapter_progress": 0,
-  "total_chapters": 10,
-  "completed_chapters": [],
-  "start_time": "2025-05-05T00:00:00Z",
-  "last_update": "2025-05-05T00:00:00Z",
-  "retry_count": 0,
-  "max_retries": 3
+  "title": "Pythonで学ぶローカルLLM構築入門"
 }

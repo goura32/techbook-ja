@@ -1,0 +1,25 @@
+{
+  "book_id": "kubernetes-linux-system-design",
+  "title": "Kubernetes × Linux システム設計 2025",
+  "overall_progress": 100,
+  "steps": {
+    "keyword_collection": 100,
+    "research": 100,
+    "chapter_design": 100,
+    "writing": 100,
+    "review": 100,
+    "publish": 100
+  },
+  "chapters": {
+    "total": 11,
+    "completed": 11,
+    "pending": 0
+  },
+  "completed_chapters": ["ch00","ch01","ch02","ch03","ch04","ch05","ch06","ch07","ch08","ch09","ch10"],
+  "git_status": "pushed",
+  "git_repo": "https://github.com/goura32/techbook-ja",
+  "git_branch": "main",
+  "start_time": "2026-05-05T09:00:00Z",
+  "complete_time": "2026-05-05T09:35:00Z",
+  "last_update": "2026-05-05T09:35:00Z"
+}

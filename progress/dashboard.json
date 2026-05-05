@@ -1,11 +1,11 @@
 {
-  "book_id": "python-local-llm-guide",
-  "title": "Pythonで学ぶローカルLLM構築入門",
-  "overall_progress": 0,
+  "book_id": "kubernetes-linux-system-design",
+  "title": "Kubernetes × Linux システム設計 2025",
+  "overall_progress": 20,
   "steps": {
     "keyword_collection": 100,
-    "research": 50,
-    "chapter_design": 0,
+    "research": 100,
+    "chapter_design": 100,
     "writing": 0,
     "review": 0,
     "publish": 0
@@ -17,6 +17,6 @@
     "pending": 10
   },
   "current_chapter": null,
-  "last_update": "2025-05-05T00:00:00Z",
+  "last_update": "2026-05-05T09:01:00Z",
   "git_status": "not_pushed"
 }
