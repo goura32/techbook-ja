@@ -195,3 +195,63 @@ Rustのコミュニティとエコシステム：
 - **Rust for Linux**：LinuxカーネルでのRustコードの公式採用
 - **crates.io**：40万以上のパッケージ（Rustのnpm）
 - **Cargo**：ビルドシステムとパッケージマネージャーを統合
+
+## Rustのアーキテクチャ比較
+
+Rustはシステムプログラミング言語として他言語と比較して以下の優位性を持っています。
+
+| 特徴 | Rust | C++ | Go |
+|--|--|--|--|
+| メモリ安全 | コンパイル時保証 | プログマ次第 | ガベージコレクション |
+| 並行処理 | 所有権による安全 | ラッチ/アトミック | goroutine |
+| パフォーマンス | C/C++同等 | C同等 | 高速 |
+| 学習曲線 | 陡峭 | 中くらい | 緩やか |
+| バイナリサイズ | 小さい | 小さい | 中くらい |
+
+### Rustコンパイラの優位性
+
+Rustのコンパイラ（rustc）は厳格な所有権チェックを行い、プログラマーに早い段階で間違いを明らかにします。
+
+```bash
+# コンパイルエラー例
+$ rustc main.rs
+error[E0382]: borrow of moved value: `s`
+  --> main.rs:5:20
+   |
+3  |     let mut s = String::from("hello");
+   |         ------- move occurs because `s` has type `String`
+4  |     let r1 = &s;
+5  |     println!("{}", s);
+   |                    ^ value borrowed here after move
+```
+
+このエラーは実行時ではなく**コンパイル時に**検出されるため、本番環境での重大なクラッシュを未然に防止できます。
+
+## Rustの生態系
+
+### Cargo：パッケージマネージャとビルドシステム
+
+Rustの生態系の中心はCargoにあります。
+
+| ツール | 用途 |
+|--|--|
+| cargo | パッケージ管理、ビルド、テストの一括ツール |
+| crates.io | Rustのパッケージレジストリ |
+| rustup | Rustツールチェーンのインストールと管理 |
+| clippy | コード品質の静的解析 |
+| rustfmt | コードフォーマット |
+
+### クレート（Crate）の活用
+
+クレートはRustのパッケージ単位です。 crates.ioで公開されています。
+
+```bash
+# 新しいプロジェクトの作成
+cargo new my-app
+cd my-app
+
+# クレート依存性の追加
+cargo add serde serde_derive
+cargo add tokio --features full
+cargo add clap
+```

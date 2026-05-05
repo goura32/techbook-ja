@@ -224,3 +224,68 @@ spec:
 - LimitRangeでリソース使用を制約
 
 次章では、K8sのオブザーバビリティについて学びます。
+## OpenCostの詳細
+
+### OpenCostのインストール
+
+```bash
+# OpenCostのインストール
+kubectl apply -f https://raw.githubusercontent.com/opencost/opencost/develop/k8s/fairness/fairness-prometheus.yaml
+kubectl apply -f https://raw.githubusercontent.com/opencost/opencost/develop/k8s/monitoring/base/monitoring-deployment.yaml
+
+# OpenCostのステータス確認
+kubectl get pods -n opencost
+```
+
+### OpenCostのエクスポート
+
+OpenCostはPrometheus形式でメトリクスをエクスポートします。
+
+```
+# HELP prometheus_storage_remote_samples_pending Samples pending to be sent to the remote storage
+# TYPE prometheus_storage_remote_samples_pending gauge
+prometheus_storage_remote_samples_pending{remote_name="default", url="http://prometheus:9090/api/v1/write"} 0
+
+# OPENCOSTリソース関連メトリクス
+opencost_cluster_hourly_cost 0.1245
+kubernetes_pod_cpu_hourly_cost 0.0042
+kubernetes_pod_memory_hourly_cost 0.0089
+kubernetes_node_hourly_cost 0.0456
+```
+
+## FinOpsのフレームワーク
+
+### FinOpsの3フェーズ
+
+1. **Inform**: コストの可視化と理解
+2. **Optimize**: コストの最適化
+3. **Operate**: 継続的なコスト管理
+
+### コスト最適化の具体的アプローチ
+
+| アプローチ | 説明 | 期待効果 |
+|--|--|--|
+| リソースリクエストの最適化 | 実際の使用量に基づいて調整 | 20-40%%のコスト削減 |
+| Spotインスタンス | 割安なスポットVMの使用 | 50-90%%のコスト削減 |
+| Auto Scaling | リアルタイムなスケールアップ/ダウン | 10-30%%のコスト削減 |
+| 自動スリープ | 非稼働時間の自動シャットダウン | 10-20%%のコスト削減 |
+
+## K8s環境のコスト可視化
+
+### Grafanaダッシュボードの設定
+
+```bash
+# Grafanaダッシュボードのインポート
+curl -s https://raw.githubusercontent.com/opencost/opencost/develop/docs/opencost-dashboard.json \
+  -o opencost-dashboard.json
+```
+
+### 主要コストメトリクス
+
+| メトリクス | 説明 | 最適化ターゲット |
+|--|--|--|
+| Cluster Total Cost | クラスタ全体の合計コスト | 全体の予算管理 |
+| Cost per Namespace | ネームスペース別のコスト | ネームスペースごとの最適化 |
+| Cost per Team | チーム別のコスト | チームごとの予算管理 |
+| Cost per Pod | Pod単位の計算コスト | 個別Podの最適化 |
+| Storage Cost | ストレージコスト | ストレージサイズの最適化 |

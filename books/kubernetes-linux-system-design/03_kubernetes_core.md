@@ -178,3 +178,94 @@ kubectl describe node
 - kubeletの仕組み
 
 次章では、ポッドとサービスのパターンを学びます。
+## Serviceのリソースタイプ
+
+Kubernetesには3つの主要なServiceタイプがあります。
+
+### ClusterIP（デフォルト）
+
+クラスター内のIPアドレスに割り当てます。他のPodからの内部通信に使用します。
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:
+  type: ClusterIP
+  selector:
+    app: web
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+```
+
+### NodePort
+
+各ノードの特定のポートに公開します。外部からのアクセスに使用します。
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: web
+  ports:
+  - nodePort: 30080
+    port: 80
+    targetPort: 8080
+```
+
+### LoadBalancer
+
+クラウドプロバイダーのLoad Balancerを作成します。
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: web
+  ports:
+  - port: 80
+    targetPort: 8080
+```
+
+## Ingressとネットワーク
+
+IngressはHTTP/HTTPSのルーティングを管理します。
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: myapp.example.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: api-service
+            port:
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-app
+            port:
+              number: 80
+```

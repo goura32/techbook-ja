@@ -85,3 +85,216 @@ kubectl apply -k "github.com/kserve/kserve/config/overlays/stable?ref=v0.15.0"
 ---
 
 K8sは進化を続ける。最新のCNCFプロジェクトの動向をフォローしてください。
+## Infrastructure as Code（IaC）
+
+### TerraformでのK8sクラスター構築
+
+```hcl
+terraform {
+  required_providers {
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.22"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "~> 2.12"
+    }
+  }
+}
+
+provider "kubernetes" {
+  config_path = "~/.kube/config"
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
+
+# クラスタのリソース定義
+resource "kubernetes_namespace" "platform" {
+  metadata {
+    name = "platform"
+  }
+}
+
+resource "helm_release" "argocd" {
+  name       = "argocd"
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argo-cd"
+  namespace  = kubernetes_namespace.platform.metadata[0].name
+  version    = "5.48.0"
+
+  set {
+    name  = "server.extraArgs"
+    value = "--insecure"
+  }
+}
+```
+
+## プラットフォームの運用
+
+### クラスタのメンテナンス手順
+
+1. ノードのローリング更新
+   ```bash
+   # K8sバージョンのアップグレード
+   kubectl drain <node-name> --ignore-daemonsets --delete-emptydir-data
+   # 該当ノードのK8sをアップグレード
+   kubectl uncordon <node-name>
+   ```
+
+2. メンテナンスウィンドウの設定
+   ```yaml
+   apiVersion: node.k8s.io/v1
+   kind: RuntimeClass
+   metadata:
+     name: maintenance
+   handler: maintenance
+   scheduling:
+     nodeSelector:
+       maintenance-window: "true"
+   ```
+
+3. バックアップの自動化
+   ```bash
+   # etcdのバックアップ（マスターノード上で）
+   ETCDCTL_API=3 etcdctl snapshot save /backup/etcd-snapshot.db \
+     --endpoints=https://127.0.0.1:2379 \
+     --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+     --cert=/etc/kubernetes/pki/etcd/server.crt \
+     --key=/etc/kubernetes/pki/etcd/server.key
+   ```
+
+### 運用チェックリスト
+
+| 項目 | 頻度 | 内容 |
+|--|--|--|
+| クラスタヘルスチェック | 毎日 | ノードの準備状況、Podのステータス |
+| リソース使用状況確認 | 毎日 | CPU、メモリ、ストレージの利用率 |
+| コストレポート | 毎週 | OpenCost/Grafanaダッシュボード |
+| セキュリティパッチ | 毎月 | コンテナランタイム/OSの更新 |
+| バックアップ検証 | 毎週 | etcdスナップからの復元テスト |
+| パフォーマンスチューニング | 四半期 | リソースリクエストの再評価 |
+
+## まとめ
+
+本章で計画したプラットフォームの要点：
+
+- コントロールプレーは3ノードで高可用性
+- ホイットリストされたGPUノードでAI/MLワークロード
+- Ciliumによる高速ネットワーク
+- Argo CDによるGitOps
+- Prometheus + Grafanaによる完全な可視性
+- OpenCostによるFinOps
+- KServe/KubeflowによるAIプラットフォーム
+## プラットフォームの構成まとめ
+
+### 全体のアーキテクチャ図
+
+```
+                        +------------------+
+                        |   External API   |
+                        |   / Monitoring   |
+                        +--------+---------+
+                                 |
+                        +--------v---------+
+                         |  Ingress/Cilium  |
+                        +--------+---------+
+                                 |
+   +-----------------+----------+----------+------------------+
+   |                 |                    |                   |
++--+--+          +--+--+              +--+--+             +--+--+
+| App |          | App |              | App |             | App |
+| A   |          | B   |              | C   |             | D   |
++--+--+          +--+--+              +--+--+             +--+--+
+   |                 |                    |                   |
+   +-----------------+--------+-----------+------------------+
+                            |
+                  +---------v---------+
+                  |   Data Storage     |
+                  |   (Persistent     |
+                  |   Volumes)        |
+                  +-------------------+
+```
+
+### 主要コンポーネントの構成
+
+| コンポーネント | バージョン | 設定ファイル |
+|--|--|--|
+| Kubernetes | v1.31+ | kubeadm config |
+| Cilium | v1.16+ | cilium-install.yaml |
+| Argo CD | v2.12+ | argocd-install.yaml |
+| Prometheus | v2.50+ | prometheus-operator.yaml |
+| Grafana | v11.0+ | grafana-dashboard.json |
+| OpenCost | v1.3+ | opencost-install.yaml |
+| KServe | v0.15+ | kserve-install.yaml |
+| Kubectl CLI | v1.31+ | kubectl-standalone |
+
+## クラスタ運用のベストプラクティス
+
+### ノード管理のベストプラクティス
+
+1. **ノードタイプ別のラベル付け**
+   ```bash
+   kubectl label node worker-gpu-001 node-type=gpu --overwrite
+   kubectl label node worker-cpu-001 node-type=cpu --overwrite
+   ```
+
+2. ** taintedノードの管理
+   ```yaml
+   # GPUワークロードのみを許容
+   taints:
+   - key: nvidia.com/gpu
+     value: "present"
+     effect: NoSchedule
+   ```
+
+3. **自動スケーリング**
+   ```yaml
+   apiVersion: addons.k8s.io/v1
+   kind: ClusterAutoscaler
+   spec:
+     minNodes: 3
+     maxNodes: 10
+     targetUtilization: 0.7
+   ```
+
+## コスト管理の実践
+
+### OpenCostによるコスト最適化
+
+```bash
+# コストレポの取得
+curl http://opencost-opencost:9090/api/ve/cost?window=7d > cost-report.json
+
+# 最コストのネームスペースを特定
+kubectl top nodes --sort-by=cpu
+kubectl top nodes --sort-by=memory
+
+# 未使用リソースの特定
+kubectl get pods --all-namespaces --sort-by=.spec.containers[0].resources.requests.cpu
+```
+
+### コスト最適化の具体案
+
+| 項目 | 現在 | 目標 | 削減率 |
+|--|--|--|--|
+| CPUリクエスト | 500m | 250m | 50% |
+| メモリリクエスト | 512Mi | 256Mi | 50% |
+| GPU予約 | 40%% | 60%% | 使用率向上 |
+| Storage | on-demand | 予約 | 30% |
+
+## まとめ
+
+本章で学んだプラットフォーム設計の要点をまとめます。
+
+- 3ノードのコントロールプレーで高可用性を確保
+- CPU/GPUノードを分離してリソース管理
+- Ciliumによるネットワークとセキュリティ
+- Argo CDによるGitOpsで自動化
+- Prometheus + Grafanaで完全な可視性
+- OpenCostでFinOpsを実践
+- KServe/KubeflowでAI/ML基盤

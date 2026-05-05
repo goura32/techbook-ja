@@ -227,3 +227,98 @@ ollama serve
 - Ollamaのインストールと動作確認
 
 次章では、インストールしたOllamaを使ってLLMを動かす方法を学びます。
+
+
+### Virtualenvの作成とアクティベーション
+
+物理的なパッケージの衝突を避けるため、仮想環境の利用を強く推奨します。仮想環境はPythonの環境を隔離し、プロジェクトごとに独立した依存関係を維持できます。
+
+```bash
+# 仮想環境の作成
+cd ~/projects/my-llm-app
+python3.11 -m venv .venv
+
+# macOS/Linux で仮想環境を有効化
+source .venv/bin/activate
+
+# Windows の場合
+.venv\Scripts\activate
+
+# パッケージのインストール
+pip install ollama langchain pydantic
+
+# 仮想環境から退出
+deactivate
+```
+
+### pipパッケージの管理
+
+```bash
+# ライフサイクルの管理
+pip install --upgrade pip setuptools wheel
+
+# 依存関係の固定
+pip freeze > requirements.txt
+
+# 必要パッケージの確認
+pip list --outdated
+
+# 特定のバージョンのインストール
+pip install langchain==0.2.0
+```
+
+### GPU環境のセットアップ
+
+GPUで高速化するには、CUDAツールチェーンが必要です。
+
+#### Ubuntu 22.04 でのCUDAインストール
+
+```bash
+# NVIDIAドライバの確認
+nvidia-smi
+
+# CUDAツールキットのインストール（例: CUDA 12.2）
+wget https://developer.download.nvidia.com/compute/cuda/12.2.0/local_installers/cuda_12.2.0_535.54.03_linux.run
+sudo sh cuda_12.2.0_535.54.03_linux.run
+```
+
+#### NVIDIAドライバのバージョン管理
+
+```bash
+# インストール可能なドライバの一覧
+apt-cache policy nvidia-driver-550
+
+# ドライバのアンインストール
+sudo apt remove --purge nvidia-driver-*
+sudo apt autoremove
+```
+
+### Dockerでの環境構築
+
+Dockerを使えば、複雑な依存関係もコンテナの中で管理できます。
+
+```dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+RUN apt-get update && apt-get install -y     build-essential     && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+CMD ["python", "main.py"]
+```
+
+### 環境の検証
+
+```bash
+# 全パッケージのバージョン確認
+pip freeze | grep -E "ollama|langchain|torch|cuda"
+
+# GPUの可用性確認
+python3 -c "import torch; print(f'CUDA: {torch.cuda.is_available()}')"
+
+# Ollamaのコネクション確認
+curl -s http://localhost:11434/api/tags | python3 -m json.tool
+```

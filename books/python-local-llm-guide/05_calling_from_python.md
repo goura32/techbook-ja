@@ -238,3 +238,92 @@ print(response)
 - エラー処理と自動リトライ
 
 次章では、LangChainとOllamaを統合する方法を学びます。
+
+
+### チャットAPIによるマルチターン会話
+
+OllamaのチャットAPIを使えば、以前の会話の内容を文脈として保持できます。
+
+```python
+import ollama
+
+messages = [
+    {"role": "system", "content": "あなたは数学の講師です。"},
+    {"role": "user", "content": "微積分の基本的な概念を教えてください。"},
+]
+
+response = ollama.chat(
+    model="llama3.1",
+    messages=messages,
+    stream=True
+)
+
+for chunk in response:
+    print(chunk["message"]["content"], end="", flush=True)
+
+print()
+
+# 次のメッセージを追記する
+messages.append({"role": "assistant", "content": response["message"]["content"]})
+messages.append({"role": "user", "content": "具体的な例も教えてください。"})
+
+response2 = ollama.chat(model="llama3.1", messages=messages)
+print(response2["message"]["content"])
+```
+
+### バッチ処理とストリーミング
+
+大量のテキストを処理する際、ストリーミングはリアルタイム性の向上に寄与します。
+
+```python
+import ollama
+
+# ストリーミング応答
+response = ollama.generate(
+    model="llama3.1",
+    prompt="Pythonでの機械学習のステップを10段階で説明してください。",
+    stream=True
+)
+
+for chunk in response:
+    if "response" in chunk:
+        print(chunk["response"], end="", flush=True)
+```
+
+### Ollamaの主要なパラメータ
+
+Ollama APIで利用可能な主要なパラメータの一覧です。
+
+| パラメータ | 説明 | デフォルト | 有効範囲 |
+|--|--|--|--|
+| model | 使用するモデル名 | -- | -- |
+| prompt | プロンプトテキスト | -- | -- |
+| temperature | 出力のランダム性（高いほど多様） | 0.8 | 0.0〜2.0 |
+| num_predict | 最大生成トークン数 | -1（無限） | 1〜4096 |
+| top_p | トップPサンプリング（高いほど多様） | 0.9 | 0.0〜1.0 |
+| top_k | トップKサンプリング（高いほど多様） | 40 | 1〜100 |
+| repeat_penalty | 繰り返しの罰則 | 1.1 | 1.0〜2.0 |
+| num_ctx | コンテキスト窓のサイズ | 2048 | 128〜32768 |
+| stream | ストリーミングの有無 | true | true/false |
+
+### エラーハンドリングの実装例
+
+```python
+import ollama
+import time
+
+def retry_generate(prompt, retries=3, delay=2):
+    for attempt in range(retries):
+        try:
+            response = ollama.generate(
+                model="llama3.1",
+                prompt=prompt,
+                timeout=60  # 60秒のタイムアウト
+            )
+            return response
+        except ollama.ResponseError as e:
+            print(f"リクエストエラー（{attempt+1}/{retries}回目）: {e}")
+            time.sleep(delay * (attempt + 1))  # エクスポネンシャルバックオフ
+    
+    raise Exception("すべてのリトライが失敗しました")
+```

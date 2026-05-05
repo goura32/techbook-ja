@@ -143,3 +143,117 @@ fn main() {
 - enumとパターンマッチングで多様なデータを表現
 - traitで振る舞いを抽象化
 - ジネリックスで型引数を取る関数・型を作成
+
+## 高度なパターンマッチング
+
+### if letとwhile let
+
+```rust
+fn main() {
+    let opt = Some(42);
+    
+    // if let：値がSomeの場合は処理
+    if let Some(value) = opt {
+        println!("Got value: {}", value);
+    }
+    
+    // while let：Someがなくなるまでループ
+    let mut values = vec![Some(1), Some(2), Some(3), None];
+    while let Some(v) = values.pop() {
+        println!("Value: {}", v);
+    }
+}
+```
+
+### ビットパターンマッチング
+
+```rust
+fn main() {
+    let byte = 0b1101_0010u8;
+    
+    match byte {
+        // ビットパターンにマッチ
+        b if b & 0b0000_0001 != 0 => println!("最下位ビットが立っている"),
+        _ => println!("最下位ビットが立っていない"),
+        
+        // マスクによるマッチ
+        b if (b & 0b1111_0000) == 0b1101_0000 => println!("上位4ビットが1101"),
+        _ => println!("それ以外"),
+    }
+}
+```
+
+## ジェネリクス
+
+### ジェネリック関数
+
+```rust
+fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
+    let mut largest = &list[0];
+    for item in &list[1..] {
+        if item > largest {
+            largest = item;
+        }
+    }
+    largest
+}
+
+fn main() {
+    let numbers = vec![34, 50, 25, 70, 19];
+    let chars = vec!['z', 'a', 'm', 'x', 'b'];
+    
+    println!("Largest number: {}", largest(&numbers));
+    println!("Largest char: {}", largest(&chars));
+}
+```
+
+### ジェネリック構造体
+
+```rust
+struct Point<T, U> {
+    x: T,
+    y: U,
+}
+
+impl<T, U> Point<T, U> {
+    fn mix<V, W>(self, other: Point<V, W>) -> Point<T, V> {
+        Point {
+            x: self.x,
+            y: other.y,
+        }
+    }
+}
+
+fn main() {
+    let p1 = Point { x: 5, y: 3.14 };
+    let p2 = Point { x: 10, y: 2.71 };
+    let p3 = p1.mix(p2);
+    println!("p3.x = {}, p3.y = {}", p3.x, p3.y);
+}
+```
+
+## トレイト境界と制約
+
+トレイト境界によりジェネリック型の動作を制限できます。
+
+```rust
+// Displayトレイトを実装した型のみ受け付ける
+fn print_info<T: std::fmt::Display>(item: &T) {
+    println!("Item: {}", item);
+}
+
+// CloneとPartialEqを実装した型のみ受け付ける
+fn compare_and_clone<T: std::fmt::Display + Clone + PartialEq>(a: T, b: T) {
+    let a_copy = a.clone();
+    if a == b {
+        println!("{} and {} are equal", a, b);
+    }
+    println!("Clone copy: {}", a_copy);
+}
+
+fn main() {
+    print_info(&42);
+    print_info(&"hello");
+    
+    compare_and_clone(String::from("hello"), String::from("hello"));
+}

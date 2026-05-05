@@ -219,3 +219,99 @@ error[E0382]: borrow of moved value: `s`
 - `borrow of moved value`：説明（移動した値を借用した）
 - `--> src/main.rs:2:9`：エラー位置
 - 行番号付きのコードと`^`マーカーで、問題の箇所を示しています。
+
+## ツールチェーンの管理
+
+### rustupによるバージョン管理
+
+異なるプロジェクトで異なるRustバージョンが必要な場合、rustupが便利です。
+
+```bash
+# 安定板のインストール
+rustup default stable
+
+# 特定のバージョンへ切り替え
+rustup default nightly
+
+# ツールチェーンの一覧
+rustup toolchain list
+
+# クリーンアップ
+rustup update
+rustup component remove rust-src --toolchain stable
+```
+
+### クロスコンパイルの設定
+
+```toml
+# .cargo/config.toml
+[target.x86_64-unknown-linux-gnu]
+linker = "gcc"
+
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc"
+```
+
+```bash
+# ターゲットの追加とコンパイル
+rustup target add x86_64-unknown-linux-gnu
+cargo build --target x86_64-unknown-linux-gnu
+```
+
+## デバッグ手法
+
+### デバッグ出力
+
+```rust
+fn main() {
+    let data = vec![1, 2, 3, 4, 5];
+    
+    // 簡易的なデバッグ出力
+    println!("data = {:?}", data);
+    
+    // 構造化されたデバッグ出力
+    #[derive(Debug)]
+    struct User {
+        name: String,
+        age: u32,
+    }
+    
+    let user = User {
+        name: "Alice".to_string(),
+        age: 30,
+    };
+    
+    println!("{:#?}", user);
+}
+```
+
+### コアクラッシュファイルの分析方法
+
+```bash
+# コアダンプの設定
+ulimit -c unlimited
+coredumpctl list
+coredumpctl debugger 1234
+```
+
+## パフォーマンス計測
+
+### ベンチマークの実行
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::black_box;
+    
+    #[bench]
+    fn bench_sort(b: &mut test::Bencher) {
+        let data: Vec<i32> = (0..10000).rev().collect();
+        b.iter(|| {
+            let mut sorted = data.clone();
+            sorted.sort();
+            black_box(&sorted);
+        });
+    }
+}
+```

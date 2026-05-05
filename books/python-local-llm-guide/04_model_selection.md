@@ -197,3 +197,81 @@ ollama pull llama3.1:8b-q8_0
    ↓
 5. ollama pull <model-name>:<version>-q4_K_M で取得
 ```
+
+
+### パラメータ圧縮の理解
+
+モデルの選択では、精度と速度のトレードオフを理解する必要があります。
+
+**量子化（Quantization）とは**: フローティングポイントの重みを整数に圧縮する手法です。精度をほぼ保ちながらモデルサイズを約4分の1に縮小できます。
+
+| 量子化レベル | メモリ効率 | 精度低下 | 形式 |
+|--|--|--|--|
+| F16(元の重み) | 100% | なし | フローティングポイント |
+| Q5_K_M | 約75% | 軽微 | 5ビット量子化 |
+| Q4_K_M | 約50% | ほぼなし | 混合ビット量子化 |
+| Q3_K_M | 約35% | やや大きい | 3ビット量子化 |
+| Q2_K | 約25% | 大きい | 2ビット量子化 |
+
+**実測の目安**: Llama 3.1 8Bモデルの場合、Q4_K_Mで約5GB、Q5_K_Mで約7GBのメモリ要件になります。
+
+### モデルのライセンス
+
+商用利用にはライセンスの確認が必須です。
+
+| モデル | ライセンス | 商用利用 | 備考 |
+|--|--|--|--|
+| Llama 3.2 | Llama 3.2 License | 可能（制限あり） | 5000万人以上のユーザー数が必要 |
+| Mistral Nemo | Apache 2.0 | 自由 | 制限なし |
+| Gemma 2 | Gemma License | 可能 | 10万人までの制限 |
+| Phi-3.5 | MIT | 自由 | 制限なし |
+
+### モデル選択のチェックリスト
+
+実際に選択する際は以下の手順を踏むことをお勧めします。
+
+1. **用途の明確化**: 何に使いたいか（チャット、要約、翻訳、コード生成...）
+2. **ハードウェアの確認**: `nvidia-smi`でVRAMを確認
+3. **ベンチマークの参照**: HuggingFace Open LLM Leaderboardで確認
+4. **実際に試す**: 小さめのモデルでまずは試して品質を確認
+
+```bash
+# HuggingFace Open LLM Leaderboardのチェック
+# ブラウザで確認: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard
+
+# ローカルでの簡易ベンチマーク
+ollama run llama3.1 "以下の方程式を解いてください: 2x + 3 = 7"
+ollama run mistral-nemo "以下の方程式を解いてください: 2x + 3 = 7"
+
+# 出力比較
+echo "結果の違いを比較してください"
+```
+
+### モデルのベンチマーク比較
+
+#### HuggingFace Open LLM Leaderboardでの確認方法
+
+HuggingFaceはOpen LLM Leaderboardで主要なオープンモデルを定期的に評価しています。
+
+#### ローカルでの簡易ベンチマーク
+
+```python
+import ollama
+import time
+
+def benchmark_model(model_name, prompt, iterations=3):
+    times = []
+    responses = []
+    for i in range(iterations):
+        start = time.time()
+        response = ollama.generate(model=model_name, prompt=prompt)
+        elapsed = time.time() - start
+        times.append(elapsed)
+        responses.append(response['response'])
+    avg_time = sum(times) / len(times)
+    avg_length = sum(len(r) for r in responses) / len(responses)
+    print(f'Model: {model_name} | Avg time: {avg_time:.2f}s | Len: {avg_length:.0f} chars')
+
+benchmark_model('llama3.1', 'Pythonの利点を5つ挙げてください。')
+benchmark_model('mistral-nemo', 'Pythonの利点を5つ挙げてください。')
+```

@@ -153,3 +153,159 @@ fn main() {
 - パターンマッチングの強力な機能
 
 次章では、並行性と非同期を学びます。
+
+## 借用と参照
+
+### 借用（Borrowing）の概念
+
+所有権を移動せずにデータをアクセスすることを「借用」と呼びます。
+
+```rust
+fn main() {
+    let s = String::from("hello");
+    
+    // 不変参照（&）
+    let r1 = &s;
+    let r2 = &s;
+    println!("{} {}", r1, r2);  // 複数の不変参照は可能
+    
+    // 可変参照（&mut）は1つのみ
+    let mut s2 = String::from("world");
+    let r3 = &mut s2;
+    *r3 = "changed";
+    // let r4 = &mut s2;  // エラー！
+}
+```
+
+### 借用の規則
+
+1. 参照はいつでも**一つ以下の可変参照**または**複数の不変参照**のどちらかを生成可能
+2. 参照は常に有効で正しいデータを指す必要がある
+
+```rust
+fn main() {
+    let mut data = String::from("hello");
+    let r1 = &data;
+    let r2 = &data;
+    // data.push_str(" world");  // エラー！不変参照が存在中に可変参照は作れない
+    println!("{} and {}", r1, r2);
+}
+```
+
+## ライフタイムの詳細
+
+### ライフタイム注釈の必要性
+
+コンパイラが所有権の寿命を追跡できるよう、ライフタイム注釈が必要です。
+
+```rust
+// 注釈なしでもコンパイラが推論できる場合
+fn longest(x: &str, y: &str) -> &str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+// 明示的なライフタイム注釈
+fn longest_with_lifetime<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+fn main() {
+    let s1 = String::from("long string");
+    let result;
+    {
+        let s2 = String::from("xyz");
+        result = longest_with_lifetime(s1.as_str(), s2.as_str());
+        // ここでs2の寿命が切れると、resultの寿命も切れる
+    }
+    println!("Longest string is {}", result);
+}
+```
+
+### 構造体でのライフタイム
+
+```rust
+struct Text<'a> {
+    content: &'a str,
+    author: &'a str,
+}
+
+impl<'a> Text<'a> {
+    fn display(&self) {
+        println!("Author: {}, Content: {}", self.author, self.content);
+    }
+}
+
+fn main() {
+    let name = String::from("Alice");
+    let text = Text {
+        content: "Rust is great!",
+        author: name.as_str(),
+    };
+    text.display();
+}
+```
+
+## 所有権とパフォーマンス
+
+所有権システムのオーバーヘッドはコンパイル時に解消されます。実行時への影響は最小限です。
+
+### 所有権の検証はコンパイル時に行われる
+
+```rust
+// このコードはコンパイルエラーになる
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1;  // 所有権が移動
+    println!("s1 = {}", s1);  // コンパイルエラー！s1はもう所有していない
+}
+```
+
+### 所有権を活用した安全なコードの例
+
+```rust
+struct Buffer {
+    data: Vec<u8>,
+    position: usize,
+}
+
+impl Buffer {
+    fn new(size: usize) -> Self {
+        Buffer {
+            data: vec![0u8; size],
+            position: 0,
+        }
+    }
+    
+    fn write(&mut self, bytes: &[u8]) -> Result<(), String> {
+        if self.position + bytes.len() > self.data.len() {
+            return Err("Buffer overflow!".to_string());
+        }
+        self.data[self.position..self.position + bytes.len()].copy_from_slice(bytes);
+        self.position += bytes.len();
+        Ok(())
+    }
+    
+    fn read(&self, offset: usize, length: usize) -> Option<&[u8]> {
+        if offset + length <= self.position {
+            Some(&self.data[offset..offset + length])
+        } else {
+            None
+        }
+    }
+}
+
+fn main() {
+    let mut buf = Buffer::new(1024);
+    buf.write(b"Hello, Rust!").unwrap();
+    let data = buf.read(0, 12).unwrap();
+    println!("{}", String::from_utf8_lossy(data));
+}
+```

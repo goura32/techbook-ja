@@ -121,3 +121,134 @@ Transformerは17年に発表された論文「Attention Is All You Need」で提
 | Gemma | Google | シンプルなアーキテクチャ | Python |
 | Qwen | アリババ | 多言語に強い | Python/C++/Rust |
 | Phi | Microsoft | 小モデルで高性能 | Python |
+
+
+## LLMの歴史と進化
+
+LLMの進化を追うことは、技術の選択を正しく行うために重要です。
+
+### 主要なマイルストーン
+
+**2017年** -- Googleが「Attention Is All You Need」を発表。Transformerアーキテクチャの生みの親です。
+
+**2018年** -- GoogleがBERTを公開。双方向アテンションで前後の文脈を同時に理解するPre-training + Fine-tuningの手法が主流になります。
+
+**2020年** -- OpenAIがGPT-3（1750億パラメータ）を公開。Scaling Lawを実証し、業界全体を巻き込んでの大規模学習の時代が始まりました。
+
+**2023年** -- ChatGPTの爆発的普及。LLMが実用的な製品になった転換点です。一方、ローカルで動かすニーズも高まりました。
+
+**2024年** -- MetaがLlama 3、MistralがMistral Nemoなどを公開。商用利用可能なモデルが増えて、個人開発者でも本格的なアプリケーションが作れるようになりました。
+
+### パラメータ数の意味
+
+| パラメータ数 | メモリ目安 | 実装環境 | 用途 |
+|--|--|--|--|
+| 1B | 2GB | ノートPC | 簡単な要約、分類 |
+| 3B | 4GB | ゲーミングPC | チャット、翻訳 |
+| 8B | 16GB | デスクトップPC | タスク全般 |
+| 40B | 80GB | GPUサーバー | 複雑な推論 |
+| 200B+ | 400GB+ | クラスタ | 研究用途 |
+
+### アテンションメカニズム
+
+アテンションの核心は「重みの付き方」にあります。各トークンが他の全トークンとの関係を計算し、最も関連性の高い部分に注目を向けます。
+
+```python
+# アテンションの簡易シミュレーション
+import numpy as np
+
+def simple_attention(query_size, keys_size, hidden_dim):
+    query = np.random.randn(hidden_dim)
+    keys = np.random.randn(keys_size, hidden_dim)
+    values = np.random.randn(keys_size, hidden_dim)
+    
+    scores = np.dot(query, keys.T) / np.sqrt(hidden_dim)
+    weights = np.exp(scores) / np.exp(scores).sum()
+    output = np.dot(weights, values)
+    return output, weights
+
+output, weights = simple_attention(10, 5, 768)
+print(f"アテンション出力形状: {output.shape}")
+print(f"重みの和: {weights.sum()}")
+```
+
+### デコーダ-onlyアーキテクチャ
+
+LlamaやGPTシリーズはデコーダ-onlyの構造を採用しています。
+
+- **プロンプト**: 入力するテキスト
+- **トークン予測**: 次のトークンを確率的に予測
+- **サンプリング**: テンパーチャ（温度）、top_pで多様性を制御
+
+Claudeシリーズはデコーダ-onlyにエンコーダを混ぜたハイブリッドを採用し、文脈理解の精度を高めています。
+
+## LLMのアーキテクチャ比較
+
+現在のLLMにはいくつかの異なるアーキテクチャがあります。それぞれに特徴と用途があります。
+
+### デコーダのみ（Decoder-only）
+
+GPTシリーズ、Llamaシリーズ、Mistralシリーズが採用。テキスト生成と対話に向いています。
+
+| モデル | ベンチマーク | 推論速度 | VRAM要件 | 言語サポート |
+|--|--|--|--|--|
+| Llama 3.1 8B | 68.2% | 高速 | 16GB | 多言語 |
+| Mistral Nemo 12B | 71.5% | 高速 | 24GB | 多言語 |
+| Gemma 2 9B | 66.8% | 高速 | 18GB | 多言語 |
+
+### エンコーダ-デコーダ（Encoder-Decoder）
+
+T5、BARTが代表。要約や翻訳に向いています。
+
+### エンコーダのみ（Encoder-only）
+
+BERT、RoBERTaが代表。テキスト分類やNER用のタスクに最適化されています。
+
+## モデルの評価指標
+
+### MMLU（Massive Multitask Language Understanding）
+
+57の教科Subjectsを対象にした多言語理解のベンチマークです。
+
+| モデル | MMLU スコア | 評価 |
+|--|--|--|
+| GPT-4 | 86.4% | 最高水準 |
+| Claude 3 Opus | 84.9% | 最高水準 |
+| Llama 3 70B | 79.0% | 優秀 |
+| Llama 3.2 8B | 68.2% | 良好 |
+| Mistral Nemo 12B | 71.5% | 良好 |
+| Phi-3.5 Mini | 65.0% | 標準 |
+
+### HumanEval（Pythonコード生成）
+
+| モデル | HumanEval スコア | 評価 |
+|--|--|--|
+| GPT-4 | 83.5% | 優秀 |
+| Llama 3 70B | 74.4% | 良好 |
+| Llama 3.2 8B | 62.3% | 標準 |
+| Codestral | 78.0% | 優秀 |
+
+## LLMの将来展望
+
+技術の展望を知ることは、未来の選択にも役立ちます。
+
+### 短期的な展望（1〜2年）
+
+- **マルチモーダル化**: 文章だけでなく画像や音声も処理するモデルが主流に
+- **効率的な推論**: モデル圧縮と量子化の進化により、より少ないリソースで高精度な推論が可能に
+- **エッジデバイスへの展開**: スマートフォンやPCへの組み込みが進む
+
+### 長期的な展望（3〜5年）
+
+- **エージェント化**: LLMが自律的にタスクを計画・ executionする
+- **ドメイン特化**: 医療、法律、科学などの専門分野に特化したモデルが増加
+- **プライバシー保護**: federated learningなど、データを外部に出さない学習手法の実用化
+
+## まとめ
+
+本章ではLLMの基本概念について学びました。
+
+- LLMは Transformerアーキテクチャに基づいている
+- パラメータ数とメモリ要件の関係を理解する
+- モデル選択にはベンチマークとライセンスを確認する
+- ローカルLLMにはプライバシー、コスト、オフライン動作の利点がある

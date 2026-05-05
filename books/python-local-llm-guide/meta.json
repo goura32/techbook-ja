@@ -1,35 +1,69 @@
 {
+  "title": "PythonベースのLLM構築入門",
   "book_id": "python-local-llm-guide",
-  "title": "Pythonで学ぶローカルLLM構築入門",
+  "total_chapters": 11,
+  "total_lines": 3875,
   "status": "completed",
-  "message": "全章執筆完了。構成は書籍の内容に最適化済み（11章）。",
-  "overall_progress": 100,
-  "publish_date": "2026-05-05",
-  "steps": {
-    "keyword_collection": 100,
-    "research": 100,
-    "chapter_design": 100,
-    "writing": 100,
-    "review": 100,
-    "publish": 100
-  },
-  "chapters": {
-    "total": 11,
-    "completed": 11,
-    "pending": 0
-  },
-  "completed_chapters": [
-    "00_introduction",
-    "01_what_is_llm",
-    "02_environment_setup",
-    "03_ollama_installation",
-    "04_model_selection",
-    "05_calling_from_python",
-    "06_langchain_integration",
-    "07_building_rag",
-    "08_prompt_engineering",
-    "09_gpu_acceleration_and_optimization",
-    "10_practical_chatbot_project",
-    "11_deploying_chatbot"
+  "quality": "commercial",
+  "min_chapter_lines": 255,
+  "created_at": "2024-01-01",
+  "updated_at": "2025-01-01",
+  "language": "ja",
+  "chapters": [
+    {
+      "title": "01 What Is Llm",
+      "file": "01_what_is_llm.md",
+      "lines": 255
+    },
+    {
+      "title": "02 Environment Setup",
+      "file": "02_environment_setup.md",
+      "lines": 325
+    },
+    {
+      "title": "03 Ollama Installation",
+      "file": "03_ollama_installation.md",
+      "lines": 314
+    },
+    {
+      "title": "04 Model Selection",
+      "file": "04_model_selection.md",
+      "lines": 278
+    },
+    {
+      "title": "05 Calling From Python",
+      "file": "05_calling_from_python.md",
+      "lines": 330
+    },
+    {
+      "title": "06 Langchain Integration",
+      "file": "06_langchain_integration.md",
+      "lines": 385
+    },
+    {
+      "title": "07 Building Rag",
+      "file": "07_building_rag.md",
+      "lines": 381
+    },
+    {
+      "title": "08 Prompt Engineering",
+      "file": "08_prompt_engineering.md",
+      "lines": 425
+    },
+    {
+      "title": "09 Gpu Acceleration And Optimization",
+      "file": "09_gpu_acceleration_and_optimization.md",
+      "lines": 277
+    },
+    {
+      "title": "10 Practical Chatbot Project",
+      "file": "10_practical_chatbot_project.md",
+      "lines": 344
+    },
+    {
+      "title": "11 Deploying Chatbot",
+      "file": "11_deploying_chatbot.md",
+      "lines": 561
+    }
   ]
 }

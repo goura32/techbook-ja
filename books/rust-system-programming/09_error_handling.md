@@ -180,3 +180,130 @@ fn read_config(path: &str) -> Result<String, anyhow::Error> {
 6. **expect()** — エラーメッセージ付きでunwrap
 
 これらを適切に使い分けることが、堅牢なRustプログラムを書くために必要です。
+
+## カスタムエラー型
+
+### std::error::Errorを実装する
+
+```rust
+use std::fmt;
+
+#[derive(Debug, Clone)]
+enum CustomError {
+    NotFound(String),
+    PermissionDenied(String),
+    ValidationError(String),
+}
+
+impl fmt::Display for CustomError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            CustomError::NotFound(msg) => write!(f, "Not found: {}", msg),
+            CustomError::PermissionDenied(msg) => write!(f, "Permission denied: {}", msg),
+            CustomError::ValidationError(msg) => write!(f, "Validation error: {}", msg),
+        }
+    }
+}
+
+impl std::error::Error for CustomError {}
+
+fn process_file(path: &str) -> Result<Vec<String>, CustomError> {
+    if !path.ends_with(".txt") {
+        return Err(CustomError::ValidationError("ファイル形式が不正です".to_string()));
+    }
+    
+    // 実際の実装ではファイルI/Oを行う
+    Ok(vec!["line1".to_string(), "line2".to_string()])
+}
+
+fn main() {
+    match process_file("data.txt") {
+        Ok(lines) => println!("成功! 行数: {}", lines.len()),
+        Err(e) => eprintln!("エラー: {}", e),
+    }
+}
+```
+
+## エラー変換とチェーン
+
+### Fromトレイトによる自動変換
+
+```rust
+use std::fs::File;
+use std::io;
+
+#[derive(Debug)]
+enum AppError {
+    Io(io::Error),
+    Parse(std::num::ParseIntError),
+}
+
+impl From<io::Error> for AppError {
+    fn from(err: io::Error) -> Self {
+        AppError::Io(err)
+    }
+}
+
+impl From<std::num::ParseIntError> for AppError {
+    fn from(err: std::num::ParseIntError) -> Self {
+        AppError::Parse(err)
+    }
+}
+
+fn read_and_parse(path: &str) -> Result<i32, AppError> {
+    let content = std::fs::read_to_string(path)?;  // io::Error -> AppError::Io
+    let num: i32 = content.trim().parse()?;         // ParseIntError -> AppError::Parse
+    Ok(num)
+}
+```
+
+## エラーハンドリングのパターン集
+
+### 1. unwrap_or_else：デフォ値 fallback
+
+```rust
+fn main() {
+    let result: Result<i32, String> = Err("計算失敗".to_string());
+    
+    // エラー時はデフォルト値を使用
+    let value = result.unwrap_or_else(|e| {
+        eprintln!("警告: {}", e);
+        0
+    });
+    
+    println!("結果: {}", value);
+}
+```
+
+### 2. and_then：エラー連鎖
+
+```rust
+fn parse_and_validate(input: &str) -> Result<i32, Box<dyn std::error::Error>> {
+    input.parse::<i32>()
+        .map_err(|e| format!("解析エラー: {}", e))?
+        .checked_add(100)
+        .ok_or_else(|| "オーバーフロー".to_string())
+}
+
+fn main() {
+    match parse_and_validate("12345") {
+        Ok(v) => println!("結果: {}", v),
+        Err(e) => eprintln!("エラー: {}", e),
+    }
+}
+```
+
+### 3. ResultからOptionへの変換
+
+```rust
+fn main() {
+    let file_result: Result<std::fs::File, io::Error> = std::fs::File::open("nonexistent.txt");
+    
+    // Okだったら何かをする（Errは無視）
+    if let Some(file) = file_result.ok() {
+        println!("ファイルが開けました");
+    } else {
+        println("ファイルが見つかりません");
+    }
+}
+```

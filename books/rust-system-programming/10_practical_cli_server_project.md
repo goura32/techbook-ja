@@ -237,3 +237,124 @@ ENTRYPOINT ["rust-chatbot"]
 
 4. **OSカーネルの開発**
    - xv6でカーネルをRustで書き直
+
+## CLIフレームワークの比較
+
+### clapの進化
+
+clapはRustのCLIフレームワークとして最も広く使われています。最新版ではderiveマクロが推奨されています。
+
+| クレート | 特徴 | おすすめ度 |
+|--|--|--|
+| clap (derive) | 最も人気があり、エコシステムが豊富 | 高 |
+| structopt | clapの上位ラッパー（clapに統合済み） | 中 |
+| argh | シンプルなインターフェース | 中 |
+
+### clapでのCLI設計の詳細設定
+
+```rust
+use clap::{Parser, Subcommand};
+
+#[derive(Parser, Debug)]
+#[command(name = "myapp", about = "システム管理ツール")]
+struct Cli {
+    /// 対象ホスト
+    #[arg(short, long, default_value = "localhost")]
+    host: String,
+    
+    /// ログレベル
+    #[arg(short, long, default_value = "info")]
+    log_level: String,
+    
+    #[command(subcommand)]
+    command: Commands,
+}
+
+#[derive(Debug, Subcommand)]
+enum Commands {
+    Status {
+        /// 詳細モード
+        #[arg(short, long)]
+        verbose: bool,
+    },
+    Restart {
+        /// 再起動対象サービス
+        service: String,
+    },
+    Monitor {
+        /// チェック間隔（秒）
+        #[arg(short, long, default_value = "60")]
+        interval: u64,
+        /// チェック回数（0=無限）
+        #[arg(short, long, default_value = "0")]
+        count: u64,
+    },
+}
+```
+
+```bash
+# 実行例
+./myapp --host example.com status --verbose
+./myapp restart nginx
+./myapp monitor --interval 30 --count 5
+```
+
+## テスト戦略
+
+### 単体テストの書き方
+
+Rustのテストフレームワークは標準ライブラリに組み込まれています。
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use assert_cmd::assert::Assert;
+    use predicates::prelude::*;
+    
+    #[test]
+    fn test_status_command() {
+        // コマンドライン引数でサブコマンドをテスト
+        let cli = Cli {
+            host: "localhost".to_string(),
+            log_level: "info".to_string(),
+            command: Commands::Status { verbose: true },
+        };
+        
+        assert_eq!(cli.host, "localhost");
+        // assert!(!cli.verbose == false); // verboseがtrueであることを確認
+    }
+    
+    #[test]
+    fn test_restart_command() {
+        let cli = Cli {
+            host: "localhost".to_string(),
+            log_level: "info".to_string(),
+            command: Commands::Restart {
+                service: "nginx".to_string(),
+            },
+        };
+        
+        match cli.command {
+            Commands::Restart { service } => assert_eq!(service, "nginx"),
+            _ => panic!("Expected Restart command"),
+        }
+    }
+}
+```
+
+### テストの実行方法
+
+```bash
+# 全テストの実行
+cargo test
+
+# パフォーマンステスト
+cargo test --release
+
+# ログ付きでテスト
+RUST_LOG=debug cargo test
+
+# パラメータ化テスト
+cargo test -- --include-ignored
+```

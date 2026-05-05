@@ -1,33 +1,64 @@
 {
+  "title": "K8s Linuxシステム設計入門",
   "book_id": "kubernetes-linux-system-design",
-  "title": "Kubernetes × Linux システム設計",
+  "total_chapters": 10,
+  "total_lines": 3176,
   "status": "completed",
-  "message": "全章執筆完了。構成は書籍の内容に最適化済み（10章）。ch08を大幅拡充。",
-  "overall_progress": 100,
-  "publish_date": "2026-05-05",
-  "steps": {
-    "keyword_collection": 100,
-    "research": 100,
-    "chapter_design": 100,
-    "writing": 100,
-    "review": 100,
-    "publish": 100
-  },
-  "chapters": {
-    "total": 10,
-    "completed": 10,
-    "pending": 0
-  },
-  "completed_chapters": [
-    "00_introduction",
-    "01_why_kubernetes",
-    "02_linux_foundations",
-    "03_kubernetes_core",
-    "04_pods_and_services_patterns",
-    "05_networking_and_ebpf",
-    "06_gitops_and_argocd",
-    "07_ai_ml_workloads",
-    "08_finops_and_cost_management",
-    "09_observability"
+  "quality": "commercial",
+  "min_chapter_lines": 271,
+  "created_at": "2024-01-01",
+  "updated_at": "2025-01-01",
+  "language": "ja",
+  "chapters": [
+    {
+      "title": "01 Why Kubernetes",
+      "file": "01_why_kubernetes.md",
+      "lines": 305
+    },
+    {
+      "title": "02 Linux Foundations",
+      "file": "02_linux_foundations.md",
+      "lines": 337
+    },
+    {
+      "title": "03 Kubernetes Core",
+      "file": "03_kubernetes_core.md",
+      "lines": 271
+    },
+    {
+      "title": "04 Pods And Services Patterns",
+      "file": "04_pods_and_services_patterns.md",
+      "lines": 338
+    },
+    {
+      "title": "05 Networking And Ebpf",
+      "file": "05_networking_and_ebpf.md",
+      "lines": 328
+    },
+    {
+      "title": "06 Gitops And Argocd",
+      "file": "06_gitops_and_argocd.md",
+      "lines": 350
+    },
+    {
+      "title": "07 Ai Ml Workloads",
+      "file": "07_ai_ml_workloads.md",
+      "lines": 347
+    },
+    {
+      "title": "08 Finops And Cost Management",
+      "file": "08_finops_and_cost_management.md",
+      "lines": 291
+    },
+    {
+      "title": "09 Observability",
+      "file": "09_observability.md",
+      "lines": 309
+    },
+    {
+      "title": "10 Practical Kubernetes Platform",
+      "file": "10_practical_kubernetes_platform.md",
+      "lines": 300
+    }
   ]
 }

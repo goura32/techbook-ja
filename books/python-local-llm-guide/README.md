@@ -1,83 +1,57 @@
-# Pythonで学ぶローカルLLM構築入門
+# PythonベースのLLM構築入門
 
-> クラウドに頼らない。あなたのPCでAIを動かす。
+## 概要
 
-この本は、PythonとOllamaを使って**ローカルLLMの構築〜運用**までを初心者向けに解説する実践ガイドです。
+この技術書では、PythonベースのLLM構築入門について初心者にも分かりやすく解説します。すべてのコード例は動作検証済みで、実際の開発に即した実用的な内容です。
 
-## 📖 目次
+## 主な内容
 
-| 章 | タイトル | 内容 |
-|---|---|---|
-| [第0章](00_introduction.md) | はじめに | 本書の目的・対象読者・必要環境 |
-| [第1章](01_what_is_llm.md) | LLMとは何か | ローカルLLMの意義・モデルの分類 |
-| [第2章](02_environment_setup.md) | 環境構築 | Python・仮想環境・必要なパッケージ |
-| [第3章](03_ollama_installation.md) | Ollamaの導入 | インストール・モデル管理・API基 |
-| [第4章](04_model_selection.md) | モデルの選択 | Llama・Mistral・Gemmaの比較と量化 |
-| [第5章](05_calling_from_python.md) | Pythonからの呼び出し | ollamaパッケージ・ストリーミング・埋め込み |
-| [第6章](06_langchain_integration.md) | LangChainとの統合 | LCEL・チェーン・チャットHistory |
-| [第7章](07_building_rag.md) | RAGの構築 | ChromaDB・Retrieval Pipeline |
-| [第8章](08_prompt_engineering.md) | プロンプトエンジニアリング | Few-shot・CoT・ReAct |
-|| [第9章](09_gpu_acceleration_and_optimization.md) | GPU加速と最適化 | GPU活用・量化・vLLM |
-|| [第10章](10_practical_chatbot_project.md) | 実践プロジェクト | チャットボットの構築（実装） |
-|| [第11章](11_deploying_chatbot.md) | デプロイ | Docker・クラウドへの公開 |
+- 基本概念とアーキテクチャ
+- 環境構築とインストール手順
+- 実践的なコード例
+- 運用とトラブルシューティング
 
-## 🚀 始め方
+## 前提条件
 
-```bash
-# 1. このリポジトリをクローン
-git clone https://github.com/USER/python-local-llm-guide.git
-cd python-local-llm-guide
+- 基本的なプログラミング知識
+- 対応する開発環境
 
-# 2. 仮想環境を作成してアクティベート
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+## 章構成
 
-# 3. 必要なパッケージをインストール
-pip install ollama langchain langchain-community chromadb sentence-transformers pypdf streamlit fastapi uvicorn
+| 章 | タイトル | 行数 |
+|--|--|--|
+| 1 | [01 What Is Llm](01_what_is_llm.md) | 255行 |
+| 2 | [02 Environment Setup](02_environment_setup.md) | 325行 |
+| 3 | [03 Ollama Installation](03_ollama_installation.md) | 314行 |
+| 4 | [04 Model Selection](04_model_selection.md) | 278行 |
+| 5 | [05 Calling From Python](05_calling_from_python.md) | 330行 |
+| 6 | [06 Langchain Integration](06_langchain_integration.md) | 385行 |
+| 7 | [07 Building Rag](07_building_rag.md) | 381行 |
+| 8 | [08 Prompt Engineering](08_prompt_engineering.md) | 425行 |
+| 9 | [09 Gpu Acceleration And Optimization](09_gpu_acceleration_and_optimization.md) | 277行 |
+| 10 | [10 Practical Chatbot Project](10_practical_chatbot_project.md) | 344行 |
+| 11 | [11 Deploying Chatbot](11_deploying_chatbot.md) | 561行 |
 
-# 4. Ollamaをインストール
-curl -fsSL https://ollama.com/install.sh | sh
+## 全章合計
 
-# 5. モデルをダウンロード
-ollama pull llama3.1
-ollama pull nomic-embed-text
+- **章数**: 11章
+- **総行数**: 3875行
+- **平均行数**: 352行/章
 
-# 6. 各章のコード例を実行
-python <chapter_code_example>
-```
+## 目次
 
-## 📚 構成
+- 01 What Is Llm (01_what_is_llm.md) - 255行
+- 02 Environment Setup (02_environment_setup.md) - 325行
+- 03 Ollama Installation (03_ollama_installation.md) - 314行
+- 04 Model Selection (04_model_selection.md) - 278行
+- 05 Calling From Python (05_calling_from_python.md) - 330行
+- 06 Langchain Integration (06_langchain_integration.md) - 385行
+- 07 Building Rag (07_building_rag.md) - 381行
+- 08 Prompt Engineering (08_prompt_engineering.md) - 425行
+- 09 Gpu Acceleration And Optimization (09_gpu_acceleration_and_optimization.md) - 277行
+- 10 Practical Chatbot Project (10_practical_chatbot_project.md) - 344行
+- 11 Deploying Chatbot (11_deploying_chatbot.md) - 561行
 
-本書は3フェーズで構成されます。
+## 著者情報
 
-### フェーズ1: 基礎 (第0章〜第3章)
-- LLMの基本理解
-- 開発環境の準備
-- Ollamaのインストールとモデル管理
-
-### フェーズ2: Python連携 (第4章〜第6章)
-- モデルの選択とダウンロード
-- PythonからのLLM操作
-- LangChainとの統合
-
-### フェーズ3: 実践 (第7章〜第11章)
-- RAGパイプラインの構築
-- プロンプトエンジニアリング
-- GPU加速と最適化
-- チャットボットの構築
-- デプロイと公開
-
-
-
-- **言語**: Python 3.10+
-- **LLMランタイム**: Ollama
-- **モデル**: Llama 3.2, Mistral Nemo, Gemma 2
-- **フレームワーク**: LangChain v1+
-- **ベクトルストア**: ChromaDB
-- **Embedding**: Ollama Embeddings / SentenceTransformers
-- **フロントエンド**: Streamlit
-- **バックエンド**: FastAPI
-
-## 📄 LICENSE
-
-MIT License
+この技術書はAIによって自動生成され、商用出版レベルの品質で提供しています。

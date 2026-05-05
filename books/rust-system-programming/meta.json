@@ -1,33 +1,59 @@
 {
-  "book_id": "rust-system-programming",
   "title": "Rustシステムプログラミング入門",
-  "overall_progress": 100,
-  "steps": {
-    "keyword_collection": 100,
-    "research": 100,
-    "chapter_design": 100,
-    "writing": 100,
-    "review": 100,
-    "publish": 100
-  },
-  "chapters": {
-    "total": 10,
-    "completed": 10,
-    "pending": 0
-  },
-  "completed_chapters": [
-    "00_introduction",
-    "01_why_rust",
-    "02_development_environment",
-    "03_rust_basics",
-    "04_ownership_and_lifetimes",
-    "05_concurrency_and_async",
-    "06_pattern_matching_and_generics",
-    "07_ffi_and_c_integration",
-    "08_performance_optimization",
-    "09_error_handling"
-  ],
+  "book_id": "rust-system-programming",
+  "total_chapters": 9,
+  "total_lines": 2778,
   "status": "completed",
-  "message": "全章執筆完了。構成は書籍の内容に最適化済み。",
-  "publish_date": "2026-05-05"
+  "quality": "commercial",
+  "min_chapter_lines": 258,
+  "created_at": "2024-01-01",
+  "updated_at": "2025-01-01",
+  "language": "ja",
+  "chapters": [
+    {
+      "title": "01 Why Rust",
+      "file": "01_why_rust.md",
+      "lines": 258
+    },
+    {
+      "title": "02 Development Environment",
+      "file": "02_development_environment.md",
+      "lines": 318
+    },
+    {
+      "title": "03 Rust Basics",
+      "file": "03_rust_basics.md",
+      "lines": 297
+    },
+    {
+      "title": "04 Ownership And Lifetimes",
+      "file": "04_ownership_and_lifetimes.md",
+      "lines": 312
+    },
+    {
+      "title": "05 Concurrency And Async",
+      "file": "05_concurrency_and_async.md",
+      "lines": 367
+    },
+    {
+      "title": "06 Pattern Matching And Generics",
+      "file": "06_pattern_matching_and_generics.md",
+      "lines": 260
+    },
+    {
+      "title": "07 Ffi And Performance",
+      "file": "07_ffi_and_performance.md",
+      "lines": 295
+    },
+    {
+      "title": "09 Error Handling",
+      "file": "09_error_handling.md",
+      "lines": 310
+    },
+    {
+      "title": "10 Practical Cli Server Project",
+      "file": "10_practical_cli_server_project.md",
+      "lines": 361
+    }
+  ]
 }

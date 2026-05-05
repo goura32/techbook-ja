@@ -224,3 +224,90 @@ ollama create my-support-assistant -f Modelfile
 # Ollama Library(Portal)にpush
 ollama push username/my-support-assistant
 ```
+
+
+### Ollamaの詳細設定
+
+Ollamaはインストール後も柔軟に設定を変更できます。
+
+#### 環境変数による設定
+
+```bash
+# Ollamaの動作ディレクトリを変更
+export OLLAMA_MODELS=/mnt/data/models
+
+# GPUオフロードのレベル（0: CPUのみ, -1: 全レイヤGPU, 0より大きい: 特定のレイヤ）
+export OLLAMA_NUM_GPU=999
+
+# フォアグラウンドで実行（デバッグ用途）
+ollama serve
+```
+
+#### モデルの管理
+
+```bash
+# ダウンロードしたモデルの一覧
+ollama list
+
+# モデルの詳細情報
+ollama show --verbose llama3.1
+
+# モデルの削除
+ollama rm llama3.1:8b
+
+# カスタムモデルの作成（Modelfileを使用）
+# Modelfileを作成
+cat > Modelfile << 'EOF'
+FROM llama3.1
+PARAMETER temperature 0.7
+PARAMETER num_predict 512
+SYSTEM "あなたは親切なアシスタントです。"
+EOF
+
+ollama create my-llama -f Modelfile
+```
+
+### OllamaのAPI仕様
+
+OllamaのREST APIを利用すれば、任意の言語からOLLamaにアクセスできます。
+
+#### APIの主なエンドポイント
+
+| エンドポイント | 説明 |
+|--|--|
+| GET /api/tags | ダウンロードしたモデルの一覧 |
+| POST /api/generate | シークエンス生成リクエスト |
+| POST /api/chat | チャットリクエスト |
+| POST /api/embed | 埋め向量の生成 |
+| POST /api/create | 新しいモデルの作成 |
+
+#### curlでのAPIテスト
+
+```bash
+# モデルリストの取得
+curl http://localhost:11434/api/tags | python3 -m json.tool
+
+# テキスト生成
+curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.1",
+  "prompt": "Pythonの利点を3つ挙げてください。",
+  "stream": false
+}'
+
+# チャットリクエスト
+curl http://localhost:11434/api/chat -d '{
+  "model": "llama3.1",
+  "messages": [
+    {"role": "user", "content": "こんにちは！自己紹介をお願いします。"}
+  ]
+}'
+```
+
+### Ollamaのトラブルシューティング
+
+| 現象 | 原因 | 解決策 |
+|--|--|--|
+| connection refused | Ollamaが起動していない | `ollama serve`で手動起動 |
+| out of memory | VRAM不足 | `OLLAMA_NUM_GPU`を減らす |
+| model not found | モデル未ダウンロード | `ollama pull <model>` |
+| slow performance | CPU推論に落ちている | `nvidia-smi`でGPU状態を確認 |

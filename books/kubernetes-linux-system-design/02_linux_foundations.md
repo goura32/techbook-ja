@@ -191,3 +191,147 @@ kubectl get pods -n kube-system | grep cilium
 - CNIとCilium/eBPFがK8sネットワークを
 
 次章では、K8sの核心を学びます。
+## ユーザーネームスペース
+
+Kubernetesはユーザーネームスペース間でリソースを分離します。
+
+```bash
+# ネームスペースの確認
+kubectl get namespaces
+# OUTPUT: default Active, kube-system Active, kube-public Active, production Active
+
+# ネームスペースを作成
+kubectl create namespace production
+
+# リソースにネームスペースを設定
+kubectl create deployment nginx --image=nginx -n production
+kubectl get pods -n production
+```
+
+## Kubernetesとコンテナランタイム
+
+KubernetesはCRI(Container Runtime Interface)経由でランタイムを管理します。
+
+| コンテナランタイム | 特徴 | K8sでの使用例 |
+|--|--|--|
+| containerd | CNCFプロジェクト。Dockerが使用 | クラウドマネージドK8s |
+| CRI-O | Kubernetes専用。軽量 | OpenShift |
+| Docker shim | 廃止予定 | 古いK8sバージョン |
+| Kata Containers | システムレベルの分離 | マルチテナント環境 |
+## Linuxの名前空間の詳細
+
+### プロセスの分離仕組み
+
+```bash
+# プロセスごとの名前空間IDを確認
+ls -l /proc/1/ns/
+# mount -> [4026531840]
+# net   -> [4026531851]
+# pid   -> [4026531836]
+# uts   -> [4026531838]
+# ipc   -> [4026531839]
+# user  -> [4026531837]
+# cgroup -> [4026531841]
+
+# 新しい名前空間でコマンドを実行
+unshare --fork --pid --mount-proc bash
+# このシェルは新しいPID名前空間で実行される
+```
+
+### 6つの名前空間
+
+| 種類 | 分離対象 | 用途 |
+|--|--|--|
+| PID | プロセスID | 他のプロセスから隔離 |
+| Network | ネットワークインターフェース |独立したネットワークスタック |
+| Mount | ファイルシステム | コンテナのルートfilesystem |
+| UTS | ホスト名 | コンテナ内と外で別々の名前 |
+| IPC | 共有メモリ | コンテナ間でも分離 |
+| User | ユーザー/グループ | 権限管理 |
+
+## cgroups v2の仕組み
+
+### リソース制限の設定
+
+```bash
+# cgroup v2の構造を確認
+tree /sys/fs/cgroup/
+
+# CPUリソース制限
+echo 50000 > /sys/fs/cgroup/myapp/cpu.max
+# 50000 = 50%%（100000が100%）
+
+# メモリリソース制限
+echo 1073741824 > /sys/fs/cgroup/myapp/memory.max
+# 1073741824 = 1GB
+
+# I/O帯域制限
+echo "8:0 reads=1024 writes=512" > /sys/fs/cgroup/myapp/io.max
+```
+
+### リージュームの仕組み
+
+cgroups v2のリージョン管理により、優先度の高いプロセスにリソースを割り当てることができます。
+
+```bash
+# キューイングの仕組み
+echo 1 > /sys/fs/cgroup/myapp/sched.weight
+# 100がデフォルト。高いほど優先度が上がり、CPUタイムが割り当てられる。
+
+# メモリの優先的リリース
+echo 1 > /sys/fs/cgroup/myapp/memory.pressure
+# メモリ逼迫時に優先的にメモリエントリをリリース
+```
+
+## K8sとLXCの関連
+
+### K8sがLinuxコンテナを管理する仕組み
+
+KubernetesはLXC（Linux Container）を直接操作せず、CRI（Container Runtime Interface）を介してコンテナランタイムを呼び出します。
+
+### CRI（Container Runtime Interface）の概要
+
+```
+    +---------------------+
+    |  Kubernetes Engine  |
+    |  (kubelet, kubelet) |
+    +----------+----------+
+               | CRI (gRPC)
+    +----------v----------+
+    |  Container Runtime  |
+    |  (containerd, CRI-O)|
+    +----------+----------+
+               | OCI (containerd)
+    +----------v----------+
+    |  Container Runtime  |
+    |  (runc, crun)       |
+    +---------------------+
+```
+
+### K8sのPodとコンテナの関係
+
+1 Pod = 1または複数のコンテナ（共享リソース）
+
+```yaml
+# multi-container Podの例
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-processor
+spec:
+  containers:
+  - name: log-reader
+    image: busybox
+    command: ["sh", "-c", "while true; do tail -f /var/log/system.log; done"]
+    volumeMounts:
+    - name: log-volume
+      mountPath: /var/log
+  - name: log-processor
+    image: fluentd
+    volumeMounts:
+    - name: log-volume
+      mountPath: /var/log
+  volumes:
+  - name: log-volume
+    emptyDir: {}
+```

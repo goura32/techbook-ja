@@ -205,3 +205,162 @@ fn main() {
     println!("合計: {}", *counter.lock().unwrap());
 }
 ```
+
+## FutureとExecutorの詳細
+
+### Futureの仕組み
+
+RustのFutureは非同期操作を抽象化する仕組みで、Pollとして状態を返します。
+
+```rust
+use std::future::Future;
+use std::pin::Pin;
+use std::task::{Context, Poll};
+
+// 簡易的なDelayed futureの実装
+struct DelayedFuture {
+    delayed_by: std::time::Duration,
+    start: Option<std::time::Instant>,
+}
+
+impl DelayedFuture {
+    fn new(delayed_by: std::time::Duration) -> Self {
+        DelayedFuture {
+            delayed_by,
+            start: None,
+        }
+    }
+}
+
+impl Future for DelayedFuture {
+    type Output = ();
+    
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<()> {
+        let this = self.get_mut();
+        
+        if this.start.is_none() {
+            this.start = Some(std::time::Instant::now());
+        }
+        
+        let elapsed = this.start.unwrap().elapsed();
+        if elapsed >= this.delayed_by {
+            Poll::Ready(())
+        } else {
+            cx.waker().wake_by_ref();
+            Poll::Pending
+        }
+    }
+}
+
+async fn wait_delayed(duration: u64) {
+    DelayedFuture::new(std::time::Duration::from_millis(duration)).await;
+    println!("Done waiting {}ms", duration);
+}
+
+#[tokio::main]
+async fn main() {
+    tokio::join!(
+        wait_delayed(1000),
+        wait_delayed(500),
+        wait_delayed(1500),
+    );
+    println!("All tasks completed");
+}
+```
+
+### チャンネルによる並行通信
+
+```rust
+use tokio::sync::mpsc;
+
+#[tokio::main]
+async fn main() {
+    let (tx, mut rx) = mpsc::channel(10);
+    
+    // 生産者タスク
+    let producer = tokio::spawn(async move {
+        for i in 0..5 {
+            tx.send(i).await.unwrap();
+            println!("Sent: {}", i);
+        }
+        drop(tx); // 送信側を閉じる
+    });
+    
+    // 消費者タスク
+    let consumer = tokio::spawn(async move {
+        while let Some(msg) = rx.recv().await {
+            println!("Received: {}", msg);
+        }
+    });
+    
+    producer.await.unwrap();
+    consumer.await.unwrap();
+}
+```
+
+## 非同期エラーハンドリング
+
+非同期コードではエラーハンドリングが特に重要です。
+
+```rust
+use tokio::time::{timeout, Duration};
+
+async fn fetch_data(id: u64) -> Result<String, tokio::io::Error> {
+    let id_str = id.to_string();
+    let result = timeout(
+        Duration::from_secs(5),
+        tokio::fs::read_to_string(format!("/tmp/data/{}.txt", id_str))
+    ).await;
+    
+    match result {
+        Ok(Ok(content)) => Ok(content),
+        Ok(Err(e)) => Err(e),
+        Err(_) => Err(tokio::io::Error::new(
+            tokio::io::ErrorKind::TimedOut,
+            "Fetch timeout"
+        )),
+    }
+}
+
+#[tokio::main]
+async fn main() {
+    match fetch_data(1).await {
+        Ok(data) => println!("Got data: {}", data),
+        Err(e) => eprintln!("Error: {}", e),
+    }
+}
+```
+
+## 並行処理の実践パターン
+
+### 並列処理スループットの最適化
+
+```rust
+use tokio::task;
+
+#[tokio::main]
+async fn main() {
+    // 並列タスクの管理
+    let mut handles = vec![];
+    
+    for i in 0..10 {
+        let handle = task::spawn(async move {
+            println!("Task {} started", i);
+            // 何かの計算
+            tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+            println!("Task {} done", i);
+            i * 2
+        });
+        handles.push(handle);
+    }
+    
+    // 全タスクの完了を待つ
+    let results: Vec<i32> = futures::future::join_all(handles)
+        .await
+        .into_iter()
+        .filter_map(|r| r.ok())
+        .collect();
+    
+    println!("All results: {:?}", results);
+}
+```
