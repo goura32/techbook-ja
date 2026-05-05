@@ -1,107 +1,87 @@
 # 第10章 実践プロジェクト：K8sプラットフォーム設計
 
-## K8sプラットフォーム設計の概要
+## はじめに
 
-本章では、これまでに学んだすべてを総動員して、K8sプラットフォームを設計・構築します。
+本章では、これまでに学んだすべてを総動員して、本番環境のK8sプラットフォームを設計・構築します。
 
-### プラットフォーム設計の全体像
-
-```
-+-----+-----+-----+-----+-----+-----+-----+-----+-----+
-| Platform Architect                      |
-| +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+ |
-| | Node 1 | Node 2 | Node 3 | Node 4 | 10000|++ |
-| | Pod 1  | Pod 2  | Pod 3  | Pod 4  |++ |1000000|
-+-----+-----+-----+-----+-----+-----+-----+-----+
-```
-
-### プラットフォーム設計
-
-```
-Phase 1: Base Platform
-Phase 2: Observability
-Phase 3: GitOps
-Phase 4: AI/ML Platform
-Phase 5: Cost Management
-```
+本章で計画するもの：
+- 3ノード構成のクラスター設計
+- ハイブリッドノードグループ（CPU/GPU）
+- ネットワーク（Cilium）
+- GitOps（Argo CD）
+- モニタリング（Prometheus + Grafana）
+- FinOps（OpenCost）
+- AI/MLプラットフォーム（KServe + Kubeflow）
 
 ## プラットフォーム設計
 
-### K8sクラスターの設計
-
-### クラスタアーキテクチャ
-
-```
-+---------------------+
-| Control Plane x3    |
-| (high available)    |
-+---------------------+
-       |
-       |
-+-----+-----+-----+-----+-----+-----+
-| Node Group 1（CPU）
-| Node Group 2（CPU+RAM）
-| Node Group 3（GPU）
-+-----+-----+-----+-----+-----+-----+
-```
-
-### Kubernetesプラットフォームの実装
+### Phase 1: Base Platform
 
 ```bash
-# K8s Platformの設計と実装
-# 1. K8sクラスタの準備
-kubectl cluster
+# 1. ノードの準備（3ノード構成）
+# Control Plane x3
 kubectl get nodes
-kubectl get namespace
+
+# 2. ネットワークのインストール
+kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/v1.16.3/install/kubernetes/manifests/cilium-install.yaml
+
+# 3. GPU Device Plugin
+kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.15.0/deployments/static/nvidia-device-plugin.yml
 ```
 
-### Platform Design: Networking
-
-```yaml
-# Ciliumのインストール
-kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/v1.16.3/install/kubernetes/manifests/cilium.yaml
-```
-
-### Platform Design: GitOps
+### Phase 2: GitOps
 
 ```yaml
 # ArgoCDのインストール
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/myrepo/k8s-manifests.git
+    path: base
+    targetReleases: main
+  destination:
+    server: https://kubernetes.default.svc
+EOF
 ```
 
-### Platform Design: Monitoring
+### Phase 3: Monitoring
 
-```yaml
+```bash
 # Prometheusのインストール
-kubectl apply -f https://raw.githubusercontent.com/prometheus-community/helm-charts/charts/prometheus-kube-prometheus
+helm install prometheus-stack grafana/prometheus-kube-prometheus \
+  --namespace monitoring --set alertmanager.enabled=true
 ```
 
-### Platform Design: FinOps
+### Phase 4: FinOps
 
 ```yaml
 # OpenCostのインストール
 kubectl apply -f https://raw.githubusercontent.com/opencost/opencost/develop/manifests/kubecost.yaml
 ```
 
+### Phase 5: AI/ML Platform
+
+```yaml
+# KServe + Kubeflowの統合
+kubectl apply -k "github.com/kserve/kserve/config/overlays/stable?ref=v0.15.0"
+```
+
 ## まとめ
 
-### 10章のまとめ
+本章で学んだこと：
+- K8sプラットフォームの全体設計
+- Node Group（CPU/GPU）の設計
+- CiliumによるCilium
+- Argo CDによるGitOps
+- Prometheus/Grafanaによるモニタリング
+- OpenCostによるFinOps
+- KServe + KubeflowによるAI/ML
 
-本書で学んだこと：
-- 1. なぜ今、Kubernetesなのか？
-- 2. Linux基礎を再確認
-- 3. K8sの核心
-- 4. 管理
-- 5. ネットワークとeBPF
-- 6. GitOpsとArgo CD
-- 7. AI/MLワークロード
-- 8. FinOpsとコスト管理
-- 9. オブザーバビリティ
-- 10. プラットフォーム設計
+---
 
-本書を通じて、K8sプラットフォーム設計を学んだ。
-
-## 今後
-
-K8sは進化を続ける。最新のCNCFプロジェクトやトレンドをフォローしてください！
-| Linux FoundationのCNCFプロジェクトの最新動向を |
+K8sは進化を続ける。最新のCNCFプロジェクトの動向をフォローしてください。

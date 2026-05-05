@@ -113,3 +113,70 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 - Result<T, E>で成功値またはエラーを返す
 - ?演算子でエラーを上位に伝播
 - custom error type
+
+
+### errorとthiserrorクレート
+
+errorクレートは、カスタムエラー型を定義するためのマクロを提供します。
+
+```rust
+use error::thiserror;
+
+#[thiserror::Error]
+enum NetworkError {
+    #[error("接続エラー: {0}")]
+    Connection(#[src] io::Error),
+    
+    #[error("タイムアウト: {0}秒")]
+    Timeout(u64),
+    
+    #[error("DNS解決エラー: {0}")]
+    Dns(String),
+}
+
+#[thiserror::Error]
+enum AppError {
+    #[error(transparent)]
+    Network(#[from] NetworkError),
+    
+    #[error("パーサーエラー: {0}")]
+    Parse(String),
+}
+
+fn fetch_data() -> Result<String, AppError> {
+    // 接続処理
+    Ok("データ取得成功".to_string())
+}
+```
+
+### エラーチェーン（Error Cause）
+
+Rustではエラーの原因をチェーンで表現できます。
+
+```rust
+use std::io::{self, Read};
+
+fn read_config(path: &str) -> Result<String, anyhow::Error> {
+    let content = std::fs::read_to_string(path)
+        .map_err(|e| anyhow::anyhow!("ファイル読み込み失敗: {}", e))?;
+    
+    // JSONパース
+    let config: serde_json::Value = serde_json::from_str(&content)
+        .map_err(|e| anyhow::anyhow!("JSONパース失敗: {}", e))?;
+    
+    Ok(config["host"].as_str().unwrap_or("").to_string())
+}
+```
+
+### エラーハンドリングパターン
+
+代表的なエラーハンドリングパターンをまとめます。
+
+1. ** Resultを使う** — functionの戻値をResult<T, E>にする
+2. ** ?演算子** — エラーを上位に即座に伝播
+3. **unwrap() / unwrap_or()** — デバッグ時に使用
+4. **map_err()** — エラー型を変換
+5. **ok_or()** — OptionをResultに変換
+6. **expect()** — エラーメッセージ付きでunwrap
+
+これらを適切に使い分けることが、堅牢なRustプログラムを書くために必要です。
