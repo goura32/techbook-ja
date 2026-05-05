@@ -26,24 +26,17 @@
 K8s上でのGPUリソース管理は重要な課題です。
 
 ```yaml
-# NVIDIAのGPUリソース
+# GPU Podの宣言
 apiVersion: v1
 kind: Pod
 metadata:
   name: gpu-pod
+  namespace: ai-workloads
 spec:
   containers:
-    image: nvidia/cuda:12.0.0-base-ubuntu22.04
-    resources:
-      limits:
-        nvidia.com/gpu: 1
-    - name: gpu-pod
+    - name: gpu-container
       image: nvidia/cuda:12.0.0-base-ubuntu22.04
-      resources:
-        limits:
-          nvidia.com/gpu:
-      name: gpu-pod
-      image: nvidia/cuda:12.0.0-base-ubuntu22.04
+      command: ["/bin/bash", "-c", "nvidia-smi && sleep infinity"]
       resources:
         limits:
           nvidia.com/gpu: 1

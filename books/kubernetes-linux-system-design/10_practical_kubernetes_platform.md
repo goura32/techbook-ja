@@ -99,7 +99,7 @@ kubectl apply -f https://raw.githubusercontent.com/opencost/opencost/develop/man
 - 9. オブザーバビリティ
 - 10. プラットフォーム設計
 
-本書を通じて、2026年のK8sプラットフォーム設計を学んだ。
+本書を通じて、K8sプラットフォーム設計を学んだ。
 
 ## 今後
 
