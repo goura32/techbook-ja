@@ -15,7 +15,7 @@ LLMには様々なモデルがあります。本章では主要なモデルを�
 
 ## 主要モデルの比較
 
-### Llama 3.2 (Meta)
+### Llama (Meta)
 
 - パラメータ: 1B, 3B, 8B, 70B, 405B
 - 商用利用: 可能（ライセンス要確認）
@@ -42,11 +42,11 @@ LLMには様々なモデルがあります。本章では主要なモデルを�
 
 | タスク | 推奨モデル |
 ||-----|||
-| 文章要約 | Llama 3.2 8B |
-| コード生成 | Llama 3.2 8B or Mistral Nemo |
-| チャット | Llama 3.2 8B |
+| 文章要約 | llama3.1:8b |
+| コード生成 | llama3.1:8b or Mistral Nemo |
+| チャット | llama3.1:8b |
 | 翻訳 | Mistral Nemo |
-| 画像理解 | Llama 3.2 Vision |
+| 画像理解 | llama3.1-vision |
 | 高度な推論 | Llama 3.1 70B（GPU必須）|
 
 ### モデル名の読み方
@@ -66,7 +66,7 @@ qwen2.5:14b      → Qwen 2.5、14Bパラメータ
 # 基本構文
 ollama pull <model_name>
 
-# 例: Llama 3.2 8Bをダウンロード
+# 例: llama3.1:8bをダウンロード
 ollama pull llama3.1:8b
 
 # 例: Mistral Nemoをダウンロード
