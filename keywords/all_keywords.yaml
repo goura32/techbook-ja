@@ -1,341 +1,210 @@
-# 技術キーワード一覧
-# SearXNG(http://localhost:8080) で調査したトレンドを管理
+book_keywords:
+  # ==
+  # 1. 既存書籍（完了）
+  # 年号参照を削除済み
+  # ==
+  completed_books:
+    - id: "python-local-llm-guide"
+      title: "Pythonで学ぶローカルLLM構築入門"
+      status: completed
+      chapters: 11
+      published: true
+      keywords:
+        - name: "LLM ローカル"
+          priority: high
+          status: processed
+        - name: "Ollama"
+          priority: high
+          status: processed
+        - name: "LangChain"
+          priority: high
+          status: processed
+        - name: "RAG"
+          priority: medium
+          status: processed
+        - name: "GPU最適化"
+          priority: low
+          status: processed
+        - name: "Quantization"
+          priority: low
+          status: processed
+      discovered:
+        - title: "RAG が LLM アプリの標準パターンに"
+        - title: "LangGraph がエージェントに台頭"
+        - title: "Structured Output が標準に"
+        - source: "SearXNG"
 
-# ============================================================
-# 1. 既存書���（完了）
-# ============================================================
-completed_books:
-  - book_id: "python-local-llm-guide"
-    title: "Pythonで学ぶローカルLLM構築入門"
-    status: completed
-    url: "https://github.com/goura32/techbook-ja"
-    chapters: 11
-    keywords:
-      - name: "LLMローカル"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "Ollama"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "LangChain"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "RAG"
-        priority: medium
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "GPU最適化"
-        priority: low
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "Quantization"
-        priority: low
-        processed: true
-        relevance: "本文中心テーマ"
-    discovered:
-      - title: "RAGがLLMアプリの標準パターンに"
-        source: "SearXNG"
-        url: ""
-        date: "2025"
-      - title: "LangGraphがエージェントに台頭"
-        source: "SearXNG"
-        url: ""
-        date: "2025"
-      - title: "Structured Outputが標準に"
-        source: "SearXNG"
-        url: ""
-        date: "2025"
+    - id: "rust-system-programming"
+      title: "Rustシステムプログラミング入門"
+      status: completed
+      chapters: 11
+      published: true
+      keywords:
+        - name: "Rust システムプログラミング"
+          priority: high
+          status: processed
+        - name: "所有権とライフタイム"
+          priority: high
+          status: processed
+        - name: "並行性と async/await"
+          priority: high
+          status: processed
+        - name: "FFI と C 連携"
+          priority: medium
+          status: processed
+        - name: "メモリ安全性"
+          priority: high
+          status: processed
+      discovered:
+        - title: "Rust が 3 年連続で最も憧れの言語"
+        - title: "TIOBE指数で最も急成長"
+        - title: "主要プロジェクトで本格採用"
+        - source: "SearXNG"
 
-  - book_id: "rust-system-programming"
-    title: "Rustシステムプログラミング入門"
-    status: completed
-    url: "https://github.com/goura32/techbook-ja"
-    chapters: 11
-    keywords:
-      - name: "Rustシステムプログラミング"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "所有権とライフタイム"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "並行性とasync/await"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "FFIとC連携"
-        priority: medium
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "メモリ安全性"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "Linuxカーネル採用"
-        priority: medium
-        processed: true
-        relevance: "本文中心テーマ"
-    discovered:
-      - title: "Rustが3年連続で最も憧れの言語"
-        source: "SearXNG 2025 State of Rust"
-        url: ""
-        date: "2025"
-      - title: "TIOBE指数13位、最も急成長"
-        source: "SearXNG"
-        url: ""
-        date: "2025"
-      - title: "2025年に主要プロジェクト本格採用"
-        source: "SearXNG"
-        url: ""
-        date: "2025"
+    - id: "kubernetes-linux-system-design"
+      title: "Kubernetes × Linux システム設計"
+      status: completed
+      chapters: 11
+      published: true
+      keywords:
+        - name: "Kubernetes AI/ML ワークロード"
+          priority: high
+          status: processed
+        - name: "GitOps ArgoCD"
+          priority: high
+          status: processed
+        - name: "eBPF ネットワーキング"
+          priority: high
+          status: processed
+        - name: "FinOps コスト管理"
+          priority: medium
+          status: processed
+        - name: "Linux コンテナ"
+          priority: high
+          status: processed
+        - name: "プラットフォームエンジニアリング"
+          priority: high
+          status: processed
+      discovered:
+        - title: "K8sでAI/MLワークロードが主要ユースケースに"
+        - title: "Argo CDがKubernetes GitOpsの大多数採用"
+        - title: "eBPFがK8sネットワークの標準技術に"
+        - source: "SearXNG"
 
-  - book_id: "kubernetes-linux-system-design"
-    title: "Kubernetes × Linux システム設計 2025"
-    status: completed
-    url: "https://github.com/goura32/techbook-ja"
-    chapters: 11
-    keywords:
-      - name: "Kubernetes AI/ML ワークロード"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "GitOps ArgoCD"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "eBPF ネットワーキング"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "FinOps コスト管理"
-        priority: medium
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "オブザーバビリティ"
-        priority: medium
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "Linux コンテナ"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "プラットフォームエンジニアリング"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-      - name: "CNCF 最新動向"
-        priority: high
-        processed: true
-        relevance: "本文中心テーマ"
-    discovered:
-      - title: "K8sでAI/MLワークロードが主要ユースケースに定着"
-        source: "SearXNG / KubeCon Europe 2025"
-        url: ""
-        date: "2025"
-      - title: "Argo CDがKubernetes GitOpsの大多数採用"
-        source: "SearXNG / CNCF"
-        url: ""
-        date: "2025"
-      - title: "eBPFがK8sネットワークの標準技術に"
-        source: "SearXNG"
-        url: ""
-        date: "2025"
+  # ==
+  # 2. 新書籍候補（未着手）
+  # ==
+  pending_books:
+    - id: "go-language-cloud-native"
+      title: "Go言語で学ぶクラウドネイティブ開発"
+      status: candidate
+      description: "CLIツール、DevOps、クラウドネイティブ開発で必須。スタックオーバーフロー調べで学びたい言語上位。"
+      keywords:
+        - name: "Go 言語"
+          priority: high
+        - name: "gRPC"
+          priority: high
+        - name: "WebAssembly"
+          priority: medium
+        - name: "インフラツール開発"
+          priority: high
+      discovered:
+        - title: "Go は CLI/DevOps/クラウドネイティブ開発に必須"
+        - source: "SearXNG"
 
-# ============================================================
-# 2. 新書籍候補（未着手）
-# ============================================================
-pending_books:
-  # --- キーボードで選定すべき候補 ---
-  - candidate_id: "go-language-2025"
-    candidate_title: "Go言語で学ぶクラウドネイティブ開発 2025"
-    status: candidate
-    description: "Goは2025年のStack Overflowで「学びたい言語」7位。CLIツール、DevOps、クラウドネイティブ開発で必須。"
-    related_keywords:
-      - name: "Go言語"
-        priority: high
-        relevance: "GoのCLIツール、gRPC、クラウドネイティブ"
-      - name: "gRPC"
-        priority: high
-        relevance: "Goと組み合わせるマイクロサービス通信"
-      - name: "WebAssembly 2025"
-        priority: medium
-        relevance: "Wasmtime/EVMでの新しい実行基盤"
-      - name: "Cloud Native Dev"
-        priority: high
-        relevance: "Cloud native開発のGo言語活用"
-      - name: "インフラツール開発"
-        priority: high
-        relevance: "Terraform/Ansibleなどのインフラツール開発"
-    discovered_from:
-      - title: "2025年にGoに1年向き合って分かった運用コストで勝つ本当の意味"
-        source: "SearXNG / Qiita"
-        date: "2025"
-      - title: "Go言語の開発者のAI使用状況などが調査レポート2025年版"
-        source: "SearXNG"
-        date: "2025"
-      - title: "Go言語でできること：WebServer、CLI、インフラツール、クラウドネイティブ"
-        source: "SearXNG"
-        date: "2025"
+    - id: "frontend-sveltekit-typecript"
+      title: "現代フロントエンド開発 - SvelteKit + TypeScript"
+      status: candidate
+      description: "TypeScript がフロントエンドの標準言語として定着。SvelteKit が注目のフレームワーク。"
+      keywords:
+        - name: "TypeScript"
+          priority: high
+        - name: "SvelteKit"
+          priority: high
+        - name: "Next.js"
+          priority: high
+        - name: "React"
+          priority: high
+        - name: "Vite"
+          priority: medium
+      discovered:
+        - title: "TypeScript がフロントエンドの標準言語として定着"
+        - source: "SearXNG"
 
-  - candidate_id: "frontend-2025-sveltekit"
-    candidate_title: "2025 フロントエンド開発完全ガイド SvelteKit + TypeScript"
-    status: candidate
-    description: "2025年ではTypeScriptがフロントエンドの事実上の標準。SvelteKitが2025年の転換点。"
-    related_keywords:
-      - name: "TypeScript"
-        priority: high
-        relevance: "フロントエンドの事実上の標準言語"
-      - name: "SvelteKit"
-        priority: high
-        relevance: "2025年の最大の転換点として注目のフレームワーク"
-      - name: "Next.js"
-        priority: high
-        relevance: "RRのフルスタックフレームワーク"
-      - name: "React"
-        priority: high
-        relevance: "シェア1位のフロントエンドライブラリ"
-      - name: "Vite"
-        priority: medium
-        relevance: " webpackを抜くビルドツール"
-      - name: "SPA アプリ"
-        priority: medium
-        relevance: "SvelteKitの活用領域"
-    discovered_from:
-      - title: "2025年にはTypeScriptがフロントエンドの標準言語として定着"
-        source: "SearXNG"
-        date: "2025"
-      - title: "Svelte 5のリリースによりRunesという新しいリアクティビティ"
-        source: "SearXNG"
-        date: "2025"
-      - title: "終結か？〜React, Vue, Angular, Next, Nuxt…覇権を握るのは？徹底比較"
-        source: "SearXNG"
-        date: "2025"
+    - id: "mcp-model-context-protocol"
+      title: "MCP（Model Context Protocol）実践ガイド"
+      status: candidate
+      description: "3大モデルベンダーが MCP を採用。LLM アプリの連携基盤となるオープンプロトコル。"
+      keywords:
+        - name: "Model Context Protocol"
+          priority: high
+        - name: "MCP サーバー"
+          priority: high
+        - name: "LLM エコシステム"
+          priority: high
+        - name: "Anthropic"
+          priority: medium
+        - name: "OpenAI"
+          priority: medium
+      discovered:
+        - title: "3大モデルベンダが揃って MCP を採用"
+        - source: "SearXNG"
 
-  - candidate_id: "mcp-2025"
-    candidate_title: "MCP（Model Context Protocol）実践ガイド 2025"
-    status: candidate
-    description: "3大モデルベンダーが揃ってMCPを採用。LLMアプリのエコシステムの基盤プロトコル。"
-    related_keywords:
-      - name: "Model Context Protocol"
-        priority: high
-        relevance: "LLMアプリと外部ツール統合のオープンプロトコル"
-      - name: "MCP サーバー"
-        priority: high
-        relevance: "MCP実装の中心"
-      - name: "LLM エコシステム"
-        priority: high
-        relevance: "LLMのエコシステム基盤"
-      - name: "Anthropic"
-        priority: medium
-        relevance: "3大ベンダーの一つ"
-      - name: "OpenAI"
-        priority: medium
-        relevance: "3大ベンダーの一つ"
-      - name: "Google DeepMind"
-        priority: medium
-        relevance: "3大ベンダーの一つ"
-    discovered_from:
-      - title: "Anthropic、OpenAI、Google DeepMindが揃ってMCPを採用"
-        source: "SearXNG"
-        date: "2025"
-      - title: "どのLLMを選んでもMCPサーバーで統合できる"
-        source: "SearXNG"
-        date: "2025"
-      - title: "MCP完全実装ガイド 2025"
-        source: "SearXNG"
-        date: "2025"
+    - id: "ai-testing-automation"
+      title: "AI 活用テスト自動化"
+      status: candidate
+      description: "AI を活用した自動テストツールが主流に。自動テストと負荷テストのインフラ設計を解説。"
+      keywords:
+        - name: "AI 自動テスト"
+          priority: high
+        - name: "CI/CD 統合"
+          priority: high
+        - name: "負荷テスト"
+          priority: medium
+        - name: "テスト自動化"
+          priority: high
+      discovered:
+        - title: "自動テストツール市場動向"
+        - source: "SearXNG"
 
-  - candidate_id: "ai-testing-2025"
-    candidate_title: "AI活용テスト自動化 2025"
-    status: candidate
-    description: "AI活用した自動テストツールが2025年で主流に。SmartBear、Tricentis、Parasoftなどの最新テスト自動化ツール。"
-    related_keywords:
-      - name: "AI自動テスト"
-        priority: high
-        relevance: "AIを活用したテスト自動化"
-      - name: "Tricentis"
-        priority: medium
-        relevance: "自動テストツール大手"
-      - name: "SmartBear"
-        priority: medium
-        relevance: "テスト自動化フレームワーク"
-      - name: "Parasoft"
-        priority: medium
-        relevance: "テスト自動化ベンダー"
-      - name: "CI/CD 統合"
-        priority: high
-        relevance: "テストをCI/CDに統合"
-      - name: "負荷テスト"
-        priority: medium
-        relevance: "大規模テストインフラ"
-    discovered_from:
-      - title: "Tricentis: 20-25%, SmartBear: 15-20%, Parasoft: 10-15%"
-        source: "SearXNG"
-        date: "2025"
-      - title: "2025年版 負荷テストツール選定の戦略的フレームワーク"
-        source: "SearXNG"
-        date: "2025"
+  # ==
+  # 3. マトリクス
+  # ==
+  keyword_matrix:
+    - keyword: "Go 言語"
+      priority: high
+      primary_book: "go-language-cloud-native"
+    - keyword: "gRPC"
+      priority: high
+      primary_book: "go-language-cloud-native"
+    - keyword: "WebAssembly"
+      priority: medium
+      primary_book: "go-language-cloud-native"
+    - keyword: "TypeScript"
+      priority: high
+      primary_book: "frontend-sveltekit-typecript"
+    - keyword: "SvelteKit"
+      priority: high
+      primary_book: "frontend-sveltekit-typecript"
+    - keyword: "Next.js"
+      priority: high
+      primary_book: "frontend-sveltekit-typecript"
+    - keyword: "React"
+      priority: high
+      primary_book: "frontend-sveltekit-typecript"
+    - keyword: "Model Context Protocol"
+      priority: high
+      primary_book: "mcp-model-context-protocol"
+    - keyword: "MCP サーバー"
+      priority: high
+      primary_book: "mcp-model-context-protocol"
+    - keyword: "AI 自動テスト"
+      priority: high
+      primary_book: "ai-testing-automation"
+    - keyword: "CI/CD 統合"
+      priority: high
+      primary_book: "ai-testing-automation"
 
-# ============================================================
-# 3. マトリクス（各キーワードがどの書籍で扱うべきか）
-# ============================================================
-keyword_matrix:
-  # 新書籍のキーワ�
-  - keyword: "Go言語"
-    priority: high
-    candidate: "go-language-2025"
-    alternative_candidates:
-      - "kubernetes-linux-system-design"  # インフラツール側
-  - keyword: "gRPC"
-    priority: high
-    candidate: "go-language-2025"
-    alternative_candidates: []
-  - keyword: "WebAssembly 2025"
-    priority: medium
-    candidate: "go-language-2025"
-    alternative_candidates:
-      - "kubernetes-linux-system-design"  # Wasmランタイム側
-  - keyword: "TypeScript"
-    priority: high
-    candidate: "frontend-2025-sveltekit"
-    alternative_candidates: []
-  - keyword: "SvelteKit"
-    priority: high
-    candidate: "frontend-2025-sveltekit"
-    alternative_candidates: []
-  - keyword: "Model Context Protocol"
-    priority: high
-    candidate: "mcp-2025"
-    alternative_candidates: []
-  - keyword: "MCP サーバー"
-    priority: high
-    candidate: "mcp-2025"
-    alternative_candidates: []
-  - keyword: "AI自動テスト"
-    priority: high
-    candidate: "ai-testing-2025"
-    alternative_candidates: [ ]
-  - keyword: "CI/CD統合"
-    priority: high
-    candidate: "ai-testing-2025"
-    alternative_candidates:
-      - "kubernetes-linux-system-design"  # GitOps側
-
-# キーワードの優先度：
-#  high    - 本書の中心テーマ候補
-#  medium  - 補足セクションとして扱える
-#  low     - optional
-
-# ステータス：
-#  candidate - 新書籍として検討中
-#  processing - 書籍制作中
-#  completed - 制作完了
-#  discarded - 却下
-
-# 処理済み：
-#  processed - キーワードの書籍として処理完了
-#  pending   - まだ未処理
+# 優先度: high = 本書中心, medium = 補足, low = optional
+# ステータス: candidate→processing→completed→discarded
+# 処理済み: processed / pending

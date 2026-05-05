@@ -1,13 +1,13 @@
-# Kubernetes × Linux システム設計 2025
+# Kubernetes × Linux システム設計
 
-> 2025年、Cloud Nativeの中心であるKubernetesとLinuxを、両輪として学ぶ実践書。
+> クラウドネイティブの中心であるKubernetesとLinuxを、両輪として学ぶ実践書。
 
 ## 📖 目次
 
 | 章 | タイトル | 内容 |
 |---|---|-|
 | [第0章](books/kubernetes-linux-system-design/ch00/chapter00.md) | はじめに | 本書の目的・対象読者・前提知識 |
-| [第1章](books/kubernetes-linux-system-design/ch01/chapter01.md) | なぜ今、Kubernetesなのか | 2025年のK8sトレンド・AI/MLワークロード |
+| [第1章](books/kubernetes-linux-system-design/ch01/chapter01.md) | なぜ今、Kubernetesなのか | クラウドネイティブのトレンド・AI/MLワークロード |
 | [第2章](books/kubernetes-linux-system-design/ch02/chapter02.md) | Linux基礎を再確認 | コンテナのLinux実装・cgroups・namespaces |
 | [第3章](books/kubernetes-linux-system-design/ch03/chapter03.md) | Kubernetesの核心 | コアイメージの役割、APIオブジェクト |
 | [第4章](books/kubernetes-linux-system-design/ch04/chapter04.md) | ポッドとサービスの設計 | Deployment、StatefulSet、Job、CronJob |

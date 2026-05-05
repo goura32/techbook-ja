@@ -1,12 +1,8 @@
 # 第1章 なぜ今、Kubernetesなのか
 
-## 2025年、Kubernetesがなぜ重要なのか
+## なぜ今、Kubernetesなのか
 
-本章では、Kubernetes2025年の最新動向を理解します。
-
-### 2025年のK8sトレンド
-
-2025年のKubernetesは、以下の点で大きな変革を遂げました。
+本章では、クラウドネイティブ基盤としてのKubernetesの重要性を理解します。
 
 | トレンド | 説明 |
 |---|---|
@@ -16,7 +12,7 @@
 | FinOps | コスト管理の標準化。OpenCostがK8s上の標準コスト可視化ツールに |
 | プラットフォームEngineering | DevOpsの次の進化段階として確立 |
 
-### KubeCon Europe 2025で注目されたポイント
+## KubeCon Europeで注目されたポイント
 
 KubeCon + CloudNativeCon Europe で注目されたのは：
 
@@ -142,7 +138,7 @@ netstat -tlnp
 
 本章で学んだこと：
 
-- Kubernetesは2025年、AI/MLワークロード、GitOps、eBPFの統合
+- KubernetesはAI/MLワークロード、GitOps、eBPFの統合
 - Linuxのcgroupsとnamespacesがコンテナ技術の基盤
 - CNCFロードマップで段階的にプラットフォームを成熟
 
