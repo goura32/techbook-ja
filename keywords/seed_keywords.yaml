@@ -1,0 +1,33 @@
+keywords:
+  - name: "Python local LLM"
+    priority: high
+    status: processing
+    book_id: "python-local-llm-guide"
+  - name: "Ollama usage"
+    priority: high
+    status: pending
+    book_id: "python-local-llm-guide"
+  - name: "Llama 3.2 setup"
+    priority: high
+    status: pending
+    book_id: "python-local-llm-guide"
+  - name: "LangChain integration"
+    priority: medium
+    status: pending
+    book_id: "python-local-llm-guide"
+  - name: "RAG implementation"
+    priority: medium
+    status: pending
+    book_id: "python-local-llm-guide"
+  - name: "Prompt engineering"
+    priority: medium
+    status: pending
+    book_id: "python-local-llm-guide"
+  - name: "GPU optimization"
+    priority: low
+    status: pending
+    book_id: "python-local-llm-guide"
+  - name: "Multi-model orchestration"
+    priority: low
+    status: pending
+    book_id: "python-local-llm-guide"

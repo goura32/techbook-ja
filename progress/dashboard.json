@@ -1,0 +1,22 @@
+{
+  "book_id": "python-local-llm-guide",
+  "title": "Pythonで学ぶローカルLLM構築入門",
+  "overall_progress": 0,
+  "steps": {
+    "keyword_collection": 100,
+    "research": 50,
+    "chapter_design": 0,
+    "writing": 0,
+    "review": 0,
+    "publish": 0
+  },
+  "chapters": {
+    "total": 10,
+    "completed": 0,
+    "in_progress": 0,
+    "pending": 10
+  },
+  "current_chapter": null,
+  "last_update": "2025-05-05T00:00:00Z",
+  "git_status": "not_pushed"
+}
