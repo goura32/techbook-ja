@@ -95,11 +95,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         code: 404,
         message: "not found".to_string(),
     };
-    let result = Err(app);
-    
+    let result: Result<String, AppError> = Err(AppError {
+        code: 404,
+        message: "not found".to_string(),
+    });
+
     match result {
         Err(e) => println!("エラー: {}", e),
-        Ok(v) => println!("{}", v),
+        Ok(v) => println!("OK: {}", v),
     }
     Ok(())
 }

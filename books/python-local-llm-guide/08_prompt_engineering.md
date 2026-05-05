@@ -69,7 +69,7 @@ Few-shot learningは、プロンプトの中に「入力-正解出力の例」�
 from langchain.llms import Ollama
 from langchain.chains import LLMChain
 
-llm = Ollama(model="llama3.2")
+llm = Ollama(model="llama3.1")
 
 few_shot_prompt = """以下の例の形式に従って、感情分析を行ってください。
 
@@ -115,7 +115,7 @@ def generate_few_shot_examples(topic, num=3):
     正解: 例1への対応する回答
     ...を{num}組生成してください。"""
 
-    response = ollama.generate(model="llama3.2", prompt=prompt)
+    response = ollama.generate(model="llama3.1", prompt=prompt)
     return response["response"]
 
 # 実用上は、Few-shot例は事前に手動で作成しておくことを推奨
@@ -133,7 +133,7 @@ import ollama
 # CoTなし
 no_cot_prompt = "17 x 24 = ?"
 result1 = ollama.generate(
-    model="llama3.2",
+    model="llama3.1",
     prompt=no_cot_prompt
 )
 
@@ -146,7 +146,7 @@ cot_prompt = """17 x 24を計算してください。
 4. 最終的な答えを書く"""
 
 result2 = ollama.generate(
-    model="llama3.2",
+    model="llama3.1",
     prompt=cot_prompt
 )
 
@@ -161,7 +161,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
 from langchain_community.llms import Ollama
 
-llm = Ollama(model="llama3.2", temperature=0)
+llm = Ollama(model="llama3.1", temperature=0)
 
 # Chain-of-Thought Chain
 cot_chain = LLMChain(
@@ -224,7 +224,7 @@ def react_agent(question, max_steps=5):
         
         # 行動の決定
         result = ollama.generate(
-            model="llama3.2",
+            model="llama3.1",
             prompt=full_prompt
         )
         
@@ -273,7 +273,7 @@ def react_with_tools(question, tools):
     最終解答: """
     
     response = ollama.generate(
-        model="llama3.2",
+        model="llama3.1",
         prompt=prompt
     )
     return response['response']
@@ -304,7 +304,7 @@ json_prompt = """以下の形式でJSONを出力してください（他のテ�
 テーマ: 【Pythonのデータ可視化ライブラリ】"""
 
 response = ollama.generate(
-    model="llama3.2",
+    model="llama3.1",
     prompt=json_prompt,
     format={"type": "object"}  # JSONモード（Ollama APIでサポート）
 )
@@ -335,7 +335,7 @@ class RAGResult(BaseModel):
 
 # Pydantic経由で構造を強制
 response = ollama.generate(
-    model="llama3.2",
+    model="llama3.1",
     prompt="Pythonに関する最新ニュースを3件検索してください",
     format=SearchResult.schema()  # Pydanticスキーマを自動適用
 )
@@ -349,7 +349,7 @@ response = ollama.generate(
 from langchain.evaluation import load_evaluator
 import ollama
 
-def evaluate_prompt(prompt_template, test_cases, llm_name="llama3.2"):
+def evaluate_prompt(prompt_template, test_cases, llm_name="llama3.1"):
     """プロンプトをテストケースで評価"""
     results = []
     

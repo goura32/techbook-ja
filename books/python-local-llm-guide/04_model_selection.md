@@ -52,7 +52,7 @@ LLMには様々なモデルがあります。本章では主要なモデルを�
 ### モデル名の読み方
 
 ```
-llama3.2:8b      → Llama 3.2、8Bパラメータ
+llama3.1:8b      → Llama 3.2、8Bパラメータ
 mistral-nemo:latest → Mistral Nemo（最新版）
 gemma2:9b-it     → Gemma 2、9B、Instruct-Tuned版
 qwen2.5:14b      → Qwen 2.5、14Bパラメータ
@@ -67,7 +67,7 @@ qwen2.5:14b      → Qwen 2.5、14Bパラメータ
 ollama pull <model_name>
 
 # 例: Llama 3.2 8Bをダウンロード
-ollama pull llama3.2:8b
+ollama pull llama3.1:8b
 
 # 例: Mistral Nemoをダウンロード
 ollama pull mistral-nemo
@@ -87,8 +87,8 @@ ollama list
 
 # 例:
 # NAME                          SIZE    MODIFIED
-# llama3.2:8b                   4.7 GB  2日前
-# llama3.2:3b                 2.0 GB  2日前
+# llama3.1:8b                   4.7 GB  2日前
+# llama3.1:3b                 2.0 GB  2日前
 # mistral-nemo:latest           12 GB   1日前
 ```
 
@@ -96,7 +96,7 @@ ollama list
 
 ```bash
 # モデルの詳細表示
-ollama show llama3.2:8b
+ollama show llama3.1:8b
 ```
 
 ### マルチモデルの使用
@@ -105,7 +105,7 @@ ollama show llama3.2:8b
 
 ```bash
 # 一度に複数のモデルをダウンロード
-ollama pull llama3.2:8b
+ollama pull llama3.1:8b
 ollama pull mistral-nemo:latest
 ollama pull gemma2:9b
 ```
@@ -115,9 +115,9 @@ ollama pull gemma2:9b
 ```python
 import ollama
 
-# llama3.2で生成
+# llama3.1で生成
 response1 = ollama.generate(
-    model="llama3.2",
+    model="llama3.1",
     prompt="東京の天気予報を教えて"
 )
 
@@ -152,13 +152,13 @@ print(response2['response'][:100])
 
 ```bash
 # Q4_0量化モデル
-ollama pull llama3.2:8b-q4_0
+ollama pull llama3.1:8b-q4_0
 
 # Q5_K_M量化モデル
-ollama pull llama3.2:8b-q5_K_M
+ollama pull llama3.1:8b-q5_K_M
 
 # Q8_0（高精度）
-ollama pull llama3.2:8b-q8_0
+ollama pull llama3.1:8b-q8_0
 ```
 
 ## まとめ

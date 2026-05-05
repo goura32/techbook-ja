@@ -104,7 +104,7 @@ fn main() {
 
 ## ライフタイム
 
-### バイオのルール
+### 借用（borrowing）のルール
 
 ```rust
 fn longest(x: &str, y: &str) -> &str {

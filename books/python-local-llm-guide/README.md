@@ -39,7 +39,7 @@ pip install ollama langchain langchain-community chromadb sentence-transformers 
 curl -fsSL https://ollama.com/install.sh | sh
 
 # 5. モデルをダウンロード
-ollama pull llama3.2
+ollama pull llama3.1
 ollama pull nomic-embed-text
 
 # 6. 各章のコード例を実行

@@ -40,7 +40,7 @@ from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 
 # Ollamaモデルの読み込み
-llm = ChatOllama(model='llama3.2', temperature=0.7)
+llm = ChatOllama(model='llama3.1', temperature=0.7)
 
 # シンプルなプロンプト
 prompt = ChatPromptTemplate.from_messages([
@@ -83,7 +83,7 @@ prompt = ChatPromptTemplate.from_messages([
     ("system", "あなたは簡潔な回答をするAIです。"),
     ("user", "{question}"),
 ])
-llm = ChatOllama(model='llama3.2', temperature=0.5)
+llm = ChatOllama(model='llama3.1', temperature=0.5)
 parser = StrOutputParser()
 
 # 連結: prompt -> llm -> parser
@@ -123,7 +123,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.messages import HumanMessage, AIMessage
 
-llm = ChatOllama(model='llama3.2', temperature=0.5)
+llm = ChatOllama(model='llama3.1', temperature=0.5)
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", "あなたは質問に答えるAIアシスタントです。"),
@@ -189,7 +189,7 @@ from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-llm = ChatOllama(model='llama3.2', temperature=0)
+llm = ChatOllama(model='llama3.1', temperature=0)
 
 # ステップ1: テキストを要約
 summarize_prompt = ChatPromptTemplate.from_messages([
@@ -229,7 +229,7 @@ from langchain_core.runnables import chain
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 
-llm = ChatOllama(model='llama3.2')
+llm = ChatOllama(model='llama3.1')
 
 # JSONレスポンス用のプロンプト
 prompt = ChatPromptTemplate.from_messages([
@@ -271,6 +271,7 @@ print(result)
 LCELチェーンでも例外が発生します。代表的なものを捕获して処理します。
 
 ```python
+import time
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 import logging
@@ -278,7 +279,7 @@ import logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-async_llm = ChatOllama(model='llama3.2', temperature=0.5)
+async_llm = ChatOllama(model='llama3.1', temperature=0.5)
 prompt = ChatPromptTemplate.from_messages([
     ("system", "あなたはAIアシスタントです。"),
     ("user", "{question}"),
@@ -296,8 +297,6 @@ def safe_chain(question: str, retries: int = 3) -> str:
             if attempt == retries - 1:
                 raise RuntimeError(f"Chain呼び出し失敗: {e}")
             time.sleep(2 ** attempt)  # 指数バックオフ
-
-import time  # 上部でインポート
 
 result = safe_chain("Pythonについて教えてください")
 print(result)
@@ -355,7 +354,7 @@ from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-llm = ChatOllama(model='llama3.2', temperature=0.5)
+llm = ChatOllama(model='llama3.1', temperature=0.5)
 prompt = ChatPromptTemplate.from_messages([
     ("system", "あなたは簡潔に答えるAIです。"),
     ("user", "{question}"),

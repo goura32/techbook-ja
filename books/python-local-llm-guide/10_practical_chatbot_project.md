@@ -55,7 +55,7 @@ local-chatbot/
 
 # Ollamaの設定
 OLLAMA_URL = "http://localhost:11434"
-MODEL_NAME = "llama3.2"
+MODEL_NAME = "llama3.1"
 EMBEDDING_MODEL = "nomic-embed-text"
 
 # RAGの設定

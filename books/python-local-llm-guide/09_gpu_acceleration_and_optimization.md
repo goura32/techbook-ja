@@ -83,7 +83,7 @@ import ollama
 
 # GPUに明示的に割り当てる
 ollama.generate(
-    model="llama3.2",
+    model="llama3.1",
     prompt="Pythonについて教えてください",
     options={
         "num_gpu": -1,      # -1で全レイヤーをGPUに
@@ -100,7 +100,7 @@ ollama.generate(
 import ollama
 
 response = ollama.generate(
-    model="llama3.2",
+    model="llama3.1",
     prompt="Pythonについて教えてください"
 )
 # Metalが自動的に検出され、GPUで動作する
@@ -140,13 +140,13 @@ F32             32bit       ~28GB             なし
 
 ```bash
 # 量子化モデルを一覧
-ollama list | grep llama3.2
+ollama list | grep llama3.1
 
 # 例:
-# llama3.2:8b         16GB (F16)
-# llama3.2:8b-q4_0      4GB (Q4_0)
-# llama3.2:8b-q6_K      5.5GB (Q6_K)
-# llama3.2:8b-q8_0      7GB (Q8_0)
+# llama3.1:8b         16GB (F16)
+# llama3.1:8b-q4_0      4GB (Q4_0)
+# llama3.1:8b-q6_K      5.5GB (Q6_K)
+# llama3.1:8b-q8_0      7GB (Q8_0)
 ```
 
 ### ベンチマーク
@@ -179,9 +179,9 @@ def benchmark_model(model_name, prompt, iterations=5):
     return avg_duration
 
 # 比較ベンチマーク
-benchmark_model("llama3.2:8b-q4_0", "Pythonの利点について100字で説明してください")
-benchmark_model("llama3.2:8b-q6_K", "Pythonの利点について100字で説明してください")
-benchmark_model("llama3.2:8b", "Pythonの利点について100字で説明してください")
+benchmark_model("llama3.1:8b-q4_0", "Pythonの利点について100字で説明してください")
+benchmark_model("llama3.1:8b-q6_K", "Pythonの利点について100字で説明してください")
+benchmark_model("llama3.1:8b", "Pythonの利点について100字で説明してください")
 ```
 
 ## vLLMの基礎
@@ -232,7 +232,7 @@ import ollama
 
 # 最適設定
 optimized_response = ollama.generate(
-    model="llama3.2",
+    model="llama3.1",
     prompt="Pythonについて教えてください",
     options={
         "num_gpu": -1,         # 全レイヤーをGPU

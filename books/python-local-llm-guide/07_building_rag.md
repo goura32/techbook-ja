@@ -293,7 +293,7 @@ prompt = ChatPromptTemplate.from_messages([
 
 # --- ステップ6: LLMの設定 ---
 llm = ChatOllama(
-    model='llama3.2',
+    model='llama3.1',
     temperature=0.3
 )
 

@@ -17,7 +17,7 @@ import ollama
 
 # 基本構文
 response = ollama.generate(
-    model='llama3.2',
+    model='llama3.1',
     prompt='Pythonの利点を3つ挙げてください'
 )
 
@@ -28,7 +28,7 @@ print(response['response'])
 
 ```python
 {
-    'model': 'llama3.2',
+    'model': 'llama3.1',
     'created_at': '2000-01-01T00:00:00.000000Z',
     'response': 'Pythonの利点は以下の通りです...',
     'done': True,
@@ -48,13 +48,13 @@ import ollama
 
 # 悪い例: 曖昧すぎる
 response1 = ollama.generate(
-    model='llama3.2',
+    model='llama3.1',
     prompt='Pythonについて書いて'
 )
 
 # 良い例: 具体的で制約がある
 response2 = ollama.generate(
-    model='llama3.2',
+    model='llama3.1',
     prompt="""Pythonの利点について教えてください。
 以下の条件を満たしてください：
 1. Pythonの利点を3つ挙げること
@@ -68,7 +68,7 @@ response2 = ollama.generate(
 ```python
 # システムメッセージで役割を与え、モデルの出力を制御
 response = ollama.chat(
-    model='llama3.2',
+    model='llama3.1',
     messages=[
         {
             'role': 'system',
@@ -93,7 +93,7 @@ import ollama
 
 # stream=Trueでリアルタイム出力
 response = ollama.generate(
-    model='llama3.2',
+    model='llama3.1',
     prompt='Pythonの機能について教えてください',
     stream=True
 )
@@ -111,7 +111,7 @@ import ollama
 def complete_sentence(text):
     """ストリーミングで完了した文章を返す"""
     response = ollama.generate(
-        model='llama3.2',
+        model='llama3.1',
         prompt='Pythonの基本的な機能を解説してください',
         stream=True
     )
@@ -137,7 +137,7 @@ import ollama
 
 # 埋め込みを生成
 vectors = ollama.embed(
-    model='llama3.2',
+    model='llama3.1',
     input='Pythonのリスト内包表記について'
 )
 
@@ -153,8 +153,8 @@ import numpy as np
 
 def get_similarity(text1, text2):
     """2つの文章の類似度を計算"""
-    emb1 = ollama.embed(model='llama3.2', input=text1)['embeddings'][0]
-    emb2 = ollama.embed(model='llama3.2', input=text2)['embeddings'][0]
+    emb1 = ollama.embed(model='llama3.1', input=text1)['embeddings'][0]
+    emb2 = ollama.embed(model='llama3.1', input=text2)['embeddings'][0]
     
     cosine_sim = np.dot(emb1, emb2) / (np.linalg.norm(emb1) * np.linalg.norm(emb2))
     return cosine_sim
@@ -164,7 +164,7 @@ sim = get_similarity(
     'Pythonのリスト内包表記',
     'Pythonでリストを効率的に生成する方法'
 )
-print(f"類似度: {sim:.3f})
+print(f"類似度: {sim:.3f}")
 ```
 
 ## エラー処理
@@ -187,7 +187,7 @@ except ollama.ResponseError as e:
 # エラーケース2: API接続エラー
 try:
     response = ollama.generate(
-        model='llama3.2',
+        model='llama3.1',
         prompt='テスト'
     )
 except ollama.ConnectionError:
@@ -196,7 +196,7 @@ except ollama.ConnectionError:
 # エラーケース3: システムオーバーロード
 try:
     response = ollama.generate(
-        model='llama3.2',
+        model='llama3.1',
         prompt='テスト'
     )
 except ollama.ResponseError as e:
@@ -214,7 +214,7 @@ def generate_with_retry(prompt, retries=3, delay=2):
     for attempt in range(retries):
         try:
             response = ollama.generate(
-                model='llama3.2',
+                model='llama3.1',
                 prompt=prompt
             )
             return response['response']
