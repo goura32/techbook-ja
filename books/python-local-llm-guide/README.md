@@ -8,17 +8,17 @@
 
 | 章 | タイトル | 内容 |
 |---|---|---|
-| [第0章](books/python-local-llm-guide/ch00/chapter00.md) | はじめに | 本書の目的・対象読者・必要環境 |
-| [第1章](books/python-local-llm-guide/ch01/chapter01.md) | LLMとは何か | ローカルLLMの意義・モデルの分類 |
-| [第2章](books/python-local-llm-guide/ch02/chapter02.md) | 環境構築 | Python・仮想環境・必要なパッケージ |
-| [第3章](books/python-local-llm-guide/ch03/chapter03.md) | Ollamaの導入 | インストール・モデル管理・API基 |
-| [第4章](books/python-local-llm-guide/ch04/chapter04.md) | モデルの選択 | Llama・Mistral・Gemmaの比較と量化 |
-| [第5章](books/python-local-llm-guide/ch05/chapter05.md) | Pythonからの呼び出し | ollamaパッケージ・ストリーミング・埋め込み |
-| [第6章](books/python-local-llm-guide/ch06/chapter06.md) | LangChainとの統合 | LCEL・チェーン・チャットHistory |
-| [第7章](books/python-local-llm-guide/ch07/chapter07.md) | RAGの構築 | ChromaDB・Retrieval Pipeline |
-| [第8章](books/python-local-llm-guide/ch08/chapter08.md) | プロンプトエンジニアリング | Few-shot・CoT・ReAct |
-| [第9章](books/python-local-llm-guide/ch09/chapter09.md) | GPU加速と最適化 | GPU活用・量化・vLLM |
-| [第10章](books/python-local-llm-guide/ch10/chapter10.md) | 実践プロジェクト | チャットボットの構築・デプロイ |
+| [第0章](00_introduction.md) | はじめに | 本書の目的・対象読者・必要環境 |
+| [第1章](01_what_is_llm.md) | LLMとは何か | ローカルLLMの意義・モデルの分類 |
+| [第2章](02_environment_setup.md) | 環境構築 | Python・仮想環境・必要なパッケージ |
+| [第3章](03_ollama_installation.md) | Ollamaの導入 | インストール・モデル管理・API基 |
+| [第4章](04_model_selection.md) | モデルの選択 | Llama・Mistral・Gemmaの比較と量化 |
+| [第5章](05_calling_from_python.md) | Pythonからの呼び出し | ollamaパッケージ・ストリーミング・埋め込み |
+| [第6章](06_langchain_integration.md) | LangChainとの統合 | LCEL・チェーン・チャットHistory |
+| [第7章](07_building_rag.md) | RAGの構築 | ChromaDB・Retrieval Pipeline |
+| [第8章](08_prompt_engineering.md) | プロンプトエンジニアリング | Few-shot・CoT・ReAct |
+| [第9章](09_gpu_acceleration_and_optimization.md) | GPU加速と最適化 | GPU活用・量化・vLLM |
+| [第10章](10_practical_chatbot_project.md) | 実践プロジェクト | チャットボットの構築・デプロイ |
 
 ## 🚀 始め方
 

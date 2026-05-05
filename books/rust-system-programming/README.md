@@ -6,17 +6,17 @@
 
 | 章 | タイトル | 内容 |
 |---|---|---|
-| [第0章](rust-system-programming/ch00/chapter00.md) | はじめに | 本書の目的・対象読者・必要環境 |
-| [第1章](rust-system-programming/ch01/chapter01.md) | なぜRustか | TIOBE指数急上昇、Linuxカーネル採用の背景 |
-| [第2章](rust-system-programming/ch02/chapter02.md) | 開発環境構築 | Rustup、Cargo、VS Codeのセットアップ |
-| [第3章](rust-system-programming/ch03/chapter03.md) | Rustの基礎 | 変数、関数、型システム、パターンマッチング |
-| [第4章](rust-system-programming/ch04/chapter04.md) | 所有権とライフタイム | Borrow checkingの仕組み、メモリ安全性 |
-| [第5章](rust-system-programming/ch05/chapter05.md) | 並行性と非同期 | スレッド、メッセージパッシング、async/await |
-| [第6章](rust-system-programming/ch06/chapter06.md) | 型システム | Enum、Trait、ジェネリクス |
-| [第7章](rust-system-programming/ch07/chapter07.md) | FFIとC連携 | 外部関数インターフェース、Cライブラリの利用 |
-| [第8章](rust-system-programming/ch08/chapter08.md) | パフォーマンス最適化 | ベンチマーク、最適化レベル、プロファイリング |
-| [第9章](rust-system-programming/ch09/chapter09.md) | エラーハンドリング | Result/Option、?演算子、カスタムエラー型 |
-| [第10章](rust-system-programming/ch10/chapter10.md) | 実践プロジェクト | CLIツールとTCPサーバーの構築 |
+| [第0章](00_introduction.md) | はじめに | 本書の目的・対象読者・必要環境 |
+| [第1章](01_why_rust.md) | なぜRustか | TIOBE指数急上昇、Linuxカーネル採用の背景 |
+| [第2章](02_development_environment.md) | 開発環境構築 | Rustup、Cargo、VS Codeのセットアップ |
+| [第3章](03_rust_basics.md) | Rustの基礎 | 変数、関数、型システム、パターンマッチング |
+| [第4章](04_ownership_and_lifetimes.md) | 所有権とライフタイム | Borrow checkingの仕組み、メモリ安全性 |
+| [第5章](05_concurrency_and_async.md) | 並行性と非同期 | スレッド、メッセージパッシング、async/await |
+| [第6章](06_pattern_matching_and_generics.md) | 型システム | Enum、Trait、ジェネリクス |
+| [第7章](07_ffi_and_c_integration.md) | FFIとC連携 | 外部関数インターフェース、Cライブラリの利用 |
+| [第8章](08_performance_optimization.md) | パフォーマンス最適化 | ベンチマーク、最適化レベル、プロファイリング |
+| [第9章](09_error_handling.md) | エラーハンドリング | Result/Option、?演算子、カスタムエラー型 |
+| [第10章](10_practical_cli_server_project.md) | 実践プロジェクト | CLIツールとTCPサーバーの構築 |
 
 ## 🚀 始め方
 

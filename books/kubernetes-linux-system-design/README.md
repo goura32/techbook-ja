@@ -6,17 +6,17 @@
 
 | 章 | タイトル | 内容 |
 |---|---|-|
-| [第0章](books/kubernetes-linux-system-design/ch00/chapter00.md) | はじめに | 本書の目的・対象読者・前提知識 |
-| [第1章](books/kubernetes-linux-system-design/ch01/chapter01.md) | なぜ今、Kubernetesなのか | クラウドネイティブのトレンド・AI/MLワークロード |
-| [第2章](books/kubernetes-linux-system-design/ch02/chapter02.md) | Linux基礎を再確認 | コンテナのLinux実装・cgroups・namespaces |
-| [第3章](books/kubernetes-linux-system-design/ch03/chapter03.md) | Kubernetesの核心 | コアイメージの役割、APIオブジェクト |
-| [第4章](books/kubernetes-linux-system-design/ch04/chapter04.md) | ポッドとサービスの設計 | Deployment、StatefulSet、Job、CronJob |
-| [第5章](books/kubernetes-linux-system-design/ch05/chapter05.md) | ネットワークとeBPF | CNI、Cilium、Hubbleによる可視化 |
-| [第6章](books/kubernetes-linux-system-design/ch06/chapter06.md) | GitOpsとArgo CD | ArgoCDのApp of Appsパターン |
-| [第7章](books/kubernetes-linux-system-design/ch07/chapter07.md) | AI/MLワークロード | KServe、Kubeflow、GPUの扱い |
-| [第8章](books/kubernetes-linux-system-design/ch08/chapter08.md) | FinOpsとコスト管理 | OpenCost、リソース最適化 |
-| [第9章](books/kubernetes-linux-system-design/ch09/chapter09.md) | オブザーバビリティ | Prometheus、Grafana、OpenTelemetry |
-| [第10章](books/kubernetes-linux-system-design/ch10/chapter10.md) | 実践プロジェクト | K8sプラットフォーム設計の実装 |
+| [第0章](00_introduction.md) | はじめに | 本書の目的・対象読者・前提知識 |
+| [第1章](01_why_kubernetes.md) | なぜ今、Kubernetesなのか | クラウドネイティブのトレンド・AI/MLワークロード |
+| [第2章](02_linux_foundations.md) | Linux基礎を再確認 | コンテナのLinux実装・cgroups・namespaces |
+| [第3章](03_kubernetes_core.md) | Kubernetesの核心 | コアイメージの役割、APIオブジェクト |
+| [第4章](04_pods_and_services_patterns.md) | ポッドとサービスの設計 | Deployment、StatefulSet、Job、CronJob |
+| [第5章](05_networking_and_ebpf.md) | ネットワークとeBPF | CNI、Cilium、Hubbleによる可視化 |
+| [第6章](06_gitops_and_argocd.md) | GitOpsとArgo CD | ArgoCDのApp of Appsパターン |
+| [第7章](07_ai_ml_workloads.md) | AI/MLワークロード | KServe、Kubeflow、GPUの扱い |
+| [第8章](08_finops_and_cost_management.md) | FinOpsとコスト管理 | OpenCost、リソース最適化 |
+| [第9章](09_observability.md) | オブザーバビリティ | Prometheus、Grafana、OpenTelemetry |
+| [第10章](10_practical_kubernetes_platform.md) | 実践プロジェクト | K8sプラットフォーム設計の実装 |
 
 ## 🚀 始め方
 
